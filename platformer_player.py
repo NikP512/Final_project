@@ -2,7 +2,7 @@ import pygame
 
 
 class Player:
-    """Калсс описывающий игрока
+    """Класс описывающий игрока
     screen -- pygame.Surface на которой отображается игрок
     x, y, vx, vy -- координаты и скорости
     w, h -- высота и ширина игрока
@@ -30,7 +30,7 @@ class Player:
         self.place_up, self.place_right, self.place_down, self.place_left = info
 
     def move(self, keys):
-        """Оптсывает движение игрока и остановку при столкновении
+        """Описывает движение игрока и остановку при столкновении
         ось для vy направлена вверх
         keys -- список зажатых клавиш"""
         g = 1
@@ -78,6 +78,7 @@ class Player:
         scale_image = pygame.transform.scale(image, (self.w, self.h))
         scale_rect = scale_image.get_rect(center=(self.x, self.y))
         self.screen.blit(scale_image, scale_rect)
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
