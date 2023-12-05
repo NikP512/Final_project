@@ -1,7 +1,19 @@
 import pygame
 
+
 class ScreenLayer:
-    pass
+    """
+
+    """
+    def __init__(self, screen, id, objects):
+        self.screen = screen
+        self.id = id
+        self.objects = objects
+
+    def draw(self):
+        for object in self.objects:
+            object.draw()
+
 
 def check_space(main_object, objects):
     """функция для проверки есть ли свободное место с каждой стороны от объекта,
