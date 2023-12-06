@@ -22,9 +22,9 @@ def check_events():
     return keys
 
 
-def update_player(player, keys):
+def update_player(player, keys, info):
     """Функция, вызывающая поведение игрока. На вход подается объект класса Player и список нажатых клавиш."""
-    player.get_info_about_space([True, True, True, True])
+    player.get_info_about_space(info)
     player.move(keys)
     player.jump(keys)
     player.draw("image_player.jpg")
@@ -40,13 +40,17 @@ def main():
     layers.append(ScreenLayer(screen, 1, []))
     layers.append(ScreenLayer(screen, 2, []))
     player = Player(screen, layers[0].id)
+    player.get_coordinates(100, 600)
+    layers[0].objects.append(Wall(screen, 0, 700, 1000, 100))
+    info = [True, True, True, True]
 
     while RUNNING:
         screen.fill((255, 255, 255))
         keys = check_events()
-        update_player(player, keys)
+        update_player(player, keys, info)
         for layer in layers:
             if layer.id == player.layer_id:
+                info = check_space(player, layer.objects)
                 layer.update()
                 break
         pygame.display.update()

@@ -45,11 +45,12 @@ class Wall:
         self.y = y
         self.w = w
         self.h = h
+        self.file_name = "wall.png"
 
-    def draw(self, file_name):
+    def draw(self):
         """Отрисовка стены
         file_name -- название файла, содержащего изображение стены"""
-        image = pygame.image.load(file_name)
+        image = pygame.image.load(self.file_name)
         scale_image = pygame.transform.scale(image, (self.w, self.h))
         scale_rect = scale_image.get_rect(center=(self.x, self.y))
         self.screen.blit(scale_image, scale_rect)

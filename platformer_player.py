@@ -26,6 +26,10 @@ class Player:
         self.place_left = False
         self.jump_time = pygame.time.get_ticks() - 1000
 
+    def get_coordinates(self, x, y):
+        self.x = x
+        self.y = y
+
     def get_info_about_space(self, info):
         """Метод для получения self.place_up и так далее
         info -- список из четырех элемнтов с соответствующими данными"""
@@ -35,29 +39,29 @@ class Player:
         """Описывает движение игрока и остановку при столкновении
         ось для vy направлена вверх
         keys -- список зажатых клавиш"""
-        g = 1
+        g = 0.05
         if self.place_down:
             self.vy -= g
             self.y -= self.vy
         elif not self.place_up and (self.vy < 0):
             self.vy = 0
 
-        if self.place_up:
+        if self.place_up and (self.vy >= 0):
             self.y -= self.vy
         elif not self.place_up and (self.vy > 0):
             self.vy = 0
 
         if self.place_right:
             self.x += self.vx
-            if keys[pygame.K_RIGHT]:
-                self.vx += 0.2
+            if keys[pygame.K_RIGHT] and (self.vx < 1):
+                self.vx += 0.1
         elif not self.place_left and (self.vx > 0):
             self.vx = 0
 
         if self.place_left:
             self.x += self.vx
-            if keys[pygame.K_LEFT]:
-                self.vx -= 0.2
+            if keys[pygame.K_LEFT] and (self.vx > -1):
+                self.vx -= 0.1
         elif not self.place_left and (self.vx < 0):
             self.vx = 0
 
@@ -67,8 +71,8 @@ class Player:
         keys -- список зажатых клавиш
         """
         if (pygame.time.get_ticks() - self.jump_time) < 100 and self.place_up:
-            self.vy += 2
-        if (pygame.time.get_ticks() - self.jump_time) > 1000 and self.place_down and keys[pygame.K_SPACE]:
+            self.vy += 0.3
+        if (pygame.time.get_ticks() - self.jump_time) > 1000 and not self.place_down and keys[pygame.K_SPACE]:
             self.jump_time = pygame.time.get_ticks()
         if not self.place_up and (self.vy > 0):
             self.jump_time -= 100
