@@ -25,6 +25,7 @@ class Player:
         self.place_down = False
         self.place_left = False
         self.jump_time = pygame.time.get_ticks() - 1000
+        self.file_name = "player.jpg"
 
     def get_coordinates(self, x, y):
         self.x = x
@@ -77,10 +78,10 @@ class Player:
         if not self.place_up and (self.vy > 0):
             self.jump_time -= 100
 
-    def draw(self, file_name):
+    def draw(self):
         """Отрисовка игрока
         file_name -- название файла содержащего изображение игрока"""
-        image = pygame.image.load(file_name)
+        image = pygame.image.load(self.file_name)
         scale_image = pygame.transform.scale(image, (self.w, self.h))
         scale_rect = scale_image.get_rect(center=(self.x, self.y))
         self.screen.blit(scale_image, scale_rect)

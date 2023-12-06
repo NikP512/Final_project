@@ -14,11 +14,11 @@ class Floor:
 
     def draw(self):
         """Функция, рисующая пол."""
-        pygame.draw.rect(self.screen, (0, 0, 0), (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(self.screen, (255, 0, 0), (self.x, self.y, self.w, self.h))
 
 
 class Block:
-    """Класс "Block" описывает блоки"""
+    """Класс "Block" описывает блоки."""
     def __init__(self, screen, x, y):
         self.id = "block"
         self.screen = screen
@@ -58,19 +58,18 @@ class Wall:
 
 class Trap:
     """Класс "Trap" описывает ловушки"""
-    def __init__(self, screen, x, y, w, h):
+    def __init__(self, screen, x, y, r):
         self.id = "trap"
         self.screen = screen
         self.x = x
         self.y = y
-        self.w = w
-        self.h = h
+        self.r = r
 
     def draw(self, file_name):
         """Отрисовка ловушек
         file_name -- название файла, содержащего изображение ловушки"""
         image = pygame.image.load(file_name)
-        scale_image = pygame.transform.scale(image, (self.w, self.h))
+        scale_image = pygame.transform.scale(image, (self.r, self.r))
         scale_rect = scale_image.get_rect(center=(self.x, self.y))
         self.screen.blit(scale_image, scale_rect)
 

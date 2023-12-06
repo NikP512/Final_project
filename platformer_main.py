@@ -27,7 +27,7 @@ def update_player(player, keys, info):
     player.get_info_about_space(info)
     player.move(keys)
     player.jump(keys)
-    player.draw("image_player.jpg")
+    player.draw()
 
 
 def main():
@@ -41,7 +41,7 @@ def main():
     layers.append(ScreenLayer(screen, 2, []))
     player = Player(screen, layers[0].id)
     player.get_coordinates(100, 600)
-    layers[0].objects.append(Wall(screen, 0, 700, 1000, 100))
+    layers[0].objects.append(Floor(screen, 0, 700, 800, 100))
     info = [True, True, True, True]
 
     while RUNNING:
