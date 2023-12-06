@@ -30,25 +30,25 @@ def update_player(player, keys):
     player.draw("image_player.jpg")
 
 
-def update_layer(layer):
-    """Функция, обновляющая слой. На вход подается объект класса ScreenLayer."""
-    pass
-
-
 def main():
     pygame.init()
 
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    player = Player(screen)
-    layer = ScreenLayer()
+    layers = list()
+    layers.append(ScreenLayer(screen, 1, []))
+    layers.append(ScreenLayer(screen, 2, []))
+    player = Player(screen, layers[0].id)
 
     while RUNNING:
         screen.fill((255, 255, 255))
         keys = check_events()
         update_player(player, keys)
-        update_layer(layer)
+        for layer in layers:
+            if layer.id == player.layer_id:
+                layer.update()
+                break
         pygame.display.update()
 
         clock.tick(FPS)

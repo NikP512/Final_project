@@ -3,6 +3,7 @@ import pygame
 
 class Player:
     """Класс описывающий игрока
+    layer_id -- идентификатор слоя, на котором в данный момент находится игрок
     screen -- pygame.Surface на которой отображается игрок
     x, y, vx, vy -- координаты и скорости
     w, h -- высота и ширина игрока
@@ -10,7 +11,8 @@ class Player:
     с соответствующей стороны от игрока свободное место, True -- есть, False -- нет
     self.jump_time -- время последнего прыжка
     """
-    def __init__(self, screen):
+    def __init__(self, screen, layer_id):
+        self.layer_id = layer_id
         self.screen = screen
         self.x = 0
         self.y = 0

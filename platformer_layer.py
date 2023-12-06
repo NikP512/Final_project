@@ -2,15 +2,13 @@ import pygame
 
 
 class ScreenLayer:
-    """
-
-    """
+    """Класс, описывающий слой уровня. Каждый слой имеет свой id и список объектов, на нем расположенных."""
     def __init__(self, screen, id, objects):
         self.screen = screen
-        self.id = id
+        self.id = str(id)
         self.objects = objects
 
-    def draw(self):
+    def update(self):
         for object in self.objects:
             object.draw()
 
@@ -38,6 +36,7 @@ def check_space(main_object, objects):
         free_spaces[n] = not free_spaces[n]
 
     return free_spaces
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
