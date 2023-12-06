@@ -14,7 +14,7 @@ class Floor:
 
     def draw(self):
         """Функция, рисующая пол."""
-        pygame.draw.rect(screen, (0, 0, 0), (self.x, self.y, self.w, self.h))
+        pygame.draw.rect(self.screen, (0, 0, 0), (self.x, self.y, self.w, self.h))
 
 
 class Block:
