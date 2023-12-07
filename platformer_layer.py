@@ -27,6 +27,9 @@ class ScreenLayer:
                 if object_id == "block":
                     x, y = line.split()[1:]
                     self.objects.append(Block(self.screen, int(x), int(y)))
+                if object_id == "wall":
+                    x, y, w, h = line.split()[1:]
+                    self.objects.append(Wall(self.screen, int(x), int(y), int(w), int(h)))
 
 
 def check_space(main_object, objects):
