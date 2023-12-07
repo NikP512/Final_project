@@ -4,13 +4,19 @@ from platformer_objects import *
 from platformer_layer import *
 
 
-class level_editor:
+class layer_editor:
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
-        self.classes_dictionary = {"1": Block}
-        self.type = "1"
+        self.classes_dictionary = {30: Block, 31: Wall}
+        self.type = 30
         self.x, self.y = pygame.mouse.get_pos()
+        self.stage = 0
+        self.start_x = 0
+        self.start_y = 0
+        self.end_x = 0
+        self.end_y = 0
+        self.time = pygame.time.get_ticks()
 
     def set_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
@@ -25,19 +31,45 @@ class level_editor:
         if key == 1 or keys[pygame.K_q] and not is_there_block:
             self.layer.objects.append(self.classes_dictionary[self.type](self.screen, self.x//20*20 + 10, self.y//20*20 + 10))
 
+    def add_wall(self):
+        keys = pygame.key.get_pressed()
+        surf = pygame.Surface((abs(self.x - self.start_x), abs(self.y - self.start_y)))
+        surf.fill((255,205,255))
+        surf.set_alpha(100)
+        self.screen.blit(surf, (min(self.start_x, self.x), min(self.start_y, self.y)))
+        if (keys[pygame.K_s]) and (self.stage <= 1):
+            self.start_x = self.x
+            self.start_y = self.y
+            self.stage = 1
+        if (keys[pygame.K_e]) and (self.stage == 1) and (pygame.time.get_ticks() - self.time > 200):
+            self.end_x = self.x
+            self.end_y = self.y
+            self.stage += 1
+            self.time = pygame.time.get_ticks()
+        if self.stage == 2:
+            self.stage = 1
+            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,(self.start_x + self.end_x)//2,
+                            (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
+
+
+
     def write_objects_to_file(self, output_filename):
         """
         """
         with open(output_filename, 'w') as out_file:
             for object in self.layer.objects:
                 s = object.id
-                s += " " + str(object.x) + " " + str(object.y) + "\n"
+                if s == "block":
+                    s += " " + str(object.x) + " " + str(object.y) + "\n"
+                elif s == "wall":
+                    s += " " + str(object.x) + " " + str(object.y) + " " + str(object.w) + " " + str(object.h) + "\n"
                 out_file.write(s)
 
     def choose_type(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_1]:
-            self.type = "1"
+        if 1 in keys:
+            if keys.index(1) in self.classes_dictionary.keys():
+                self.type = keys.index(1)
 
 
 HEIGHT = 800
@@ -67,16 +99,19 @@ def main():
     layers = list()
     layers.append(ScreenLayer(screen, 1, []))
     layers.append(ScreenLayer(screen, 2, []))
-    editor = level_editor(screen, layers[0])
+    editor = layer_editor(screen, layers[0])
 
     while RUNNING:
         screen.fill((255, 255, 255))
         keys = check_events()
         for layer in layers:
             layer.update()
-        pygame.display.update()
+        editor.choose_type()
         editor.set_mouse_position()
-        editor.add_block()
+        if editor.type == 30:
+            editor.add_block()
+        if editor.type == 31:
+            editor.add_wall()
         clock.tick(FPS)
         pygame.display.update()
 
