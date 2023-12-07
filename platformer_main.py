@@ -42,6 +42,7 @@ def main():
     player = Player(screen, layers[0].id)
     player.get_coordinates(300, 600)
     layers[0].objects.append(Wall(screen, 400, 700, 800, 100))
+    layers[0].set_object_from_file("1.1")
     info = [True, True, True, True]
 
     while RUNNING:

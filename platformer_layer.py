@@ -1,5 +1,5 @@
 import pygame
-
+from platformer_objects import *
 
 class ScreenLayer:
     """Класс, описывающий слой уровня. Каждый слой имеет свой id и список объектов, на нем расположенных."""
@@ -7,6 +7,7 @@ class ScreenLayer:
         self.screen = screen
         self.id = str(id)
         self.objects = objects
+        self.object_classes = {"block": Block}
 
     def update(self):
         for object in self.objects:
@@ -16,6 +17,16 @@ class ScreenLayer:
             scale_image = pygame.transform.scale(image, (object.w, object.h))
             scale_rect = scale_image.get_rect(center=(object.x, object.y))
             object.screen.blit(scale_image, scale_rect)
+
+    def set_object_from_file(self, file_name):
+        with open(file_name) as input_file:
+            for line in input_file:
+                if len(line.strip()) == 0 or line[0] == '#':
+                    continue  # пустые строки и строки-комментарии пропускаем
+                object_id = line.split()[0].lower()
+                if object_id == "block":
+                    x, y = line.split()[1:]
+                    self.objects.append(Block(self.screen, int(x), int(y)))
 
 
 def check_space(main_object, objects):

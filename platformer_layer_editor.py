@@ -14,6 +14,7 @@ class level_editor:
 
     def set_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
+
     def add_block(self):
         keys = pygame.key.get_pressed()
         key = pygame.MOUSEBUTTONDOWN
@@ -30,7 +31,7 @@ class level_editor:
         with open(output_filename, 'w') as out_file:
             for object in self.layer.objects:
                 s = object.id
-                s += " " + str(object.x) + " " + str(object.y) + " " + str(object.w) + " " + str(object.h) + "\n"
+                s += " " + str(object.x) + " " + str(object.y) + "\n"
                 out_file.write(s)
 
     def choose_type(self):
