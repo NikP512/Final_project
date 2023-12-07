@@ -17,8 +17,21 @@ class level_editor:
     def add_block(self):
         keys = pygame.key.get_pressed()
         key = pygame.MOUSEBUTTONDOWN
-        if key == 1 or keys[pygame.K_q]:
-            self.layer.objects.append(self.classes_dictionary["1"](self.screen, self.x//20*20 + 10, self.y//20*20 + 10))
+        is_there_block = False
+        for object in self.layer.objects:
+            rect = pygame.Rect(object.x - object.w / 2, object.y - object.h / 2, object.w, object.h)
+            is_there_block += rect.collidepoint(self.x, self.y)
+        if key == 1 or keys[pygame.K_q] and not is_there_block:
+            self.layer.objects.append(self.classes_dictionary[self.type](self.screen, self.x//20*20 + 10, self.y//20*20 + 10))
+
+    def write_objects_to_file(self, output_filename):
+        """
+        """
+        with open(output_filename, 'w') as out_file:
+            for object in self.layer.objects:
+                s = object.id
+                s += " " + str(object.x) + " " + str(object.y) + " " + str(object.w) + " " + str(object.h) + "\n"
+                out_file.write(s)
 
     def choose_type(self):
         keys = pygame.key.get_pressed()
@@ -66,6 +79,7 @@ def main():
         clock.tick(FPS)
         pygame.display.update()
 
+    editor.write_objects_to_file("1.1")
     pygame.quit()
 
 
