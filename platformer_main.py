@@ -40,19 +40,19 @@ def main():
     layers.append(ScreenLayer(screen, 1, []))
     layers.append(ScreenLayer(screen, 2, []))
     player = Player(screen, layers[0].id)
-    player.get_coordinates(100, 600)
-    layers[0].objects.append(Floor(screen, 0, 700, 800, 100))
+    player.get_coordinates(300, 600)
+    layers[0].objects.append(Wall(screen, 400, 700, 800, 100))
     info = [True, True, True, True]
 
     while RUNNING:
         screen.fill((255, 255, 255))
         keys = check_events()
-        update_player(player, keys, info)
         for layer in layers:
             if layer.id == player.layer_id:
                 info = check_space(player, layer.objects)
                 layer.update()
                 break
+        update_player(player, keys, info)
         pygame.display.update()
 
         clock.tick(FPS)
