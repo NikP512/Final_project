@@ -26,14 +26,7 @@ class Block:
         self.y = y
         self.w = 20
         self.h = 20
-
-    def draw(self, file_name):
-        """Отрисовка блоков
-        file_name -- название файла, содержащего изображение стены"""
-        image = pygame.image.load(file_name)
-        scale_image = pygame.transform.scale(image, (self.w, self.h))
-        scale_rect = scale_image.get_rect(center=(self.x, self.y))
-        self.screen.blit(scale_image, scale_rect)
+        self.file_name = ""
 
 
 class Wall:
@@ -47,14 +40,6 @@ class Wall:
         self.h = h
         self.file_name = "wall.png"
 
-    def draw(self):
-        """Отрисовка стены
-        file_name -- название файла, содержащего изображение стены"""
-        image = pygame.image.load(self.file_name)
-        scale_image = pygame.transform.scale(image, (self.w, self.h))
-        scale_rect = scale_image.get_rect(center=(self.x, self.y))
-        self.screen.blit(scale_image, scale_rect)
-
 
 class Trap:
     """Класс "Trap" описывает ловушки"""
@@ -64,14 +49,7 @@ class Trap:
         self.x = x
         self.y = y
         self.r = r
-
-    def draw(self, file_name):
-        """Отрисовка ловушек
-        file_name -- название файла, содержащего изображение ловушки"""
-        image = pygame.image.load(file_name)
-        scale_image = pygame.transform.scale(image, (self.r, self.r))
-        scale_rect = scale_image.get_rect(center=(self.x, self.y))
-        self.screen.blit(scale_image, scale_rect)
+        self.file_name = ""
 
 
 if __name__ == "__main__":

@@ -10,7 +10,12 @@ class ScreenLayer:
 
     def update(self):
         for object in self.objects:
-            object.draw()
+            """Отрисовка слоя
+            file_name -- название файла, содержащего изображение слоя"""
+            image = pygame.image.load(object.file_name)
+            scale_image = pygame.transform.scale(image, (object.w, object.h))
+            scale_rect = scale_image.get_rect(center=(object.x, object.y))
+            object.screen.blit(scale_image, scale_rect)
 
 
 def check_space(main_object, objects):
