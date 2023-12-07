@@ -26,7 +26,7 @@ class Block:
         self.y = y
         self.w = 20
         self.h = 20
-        self.file_name = ""
+        self.file_name = "Block_prototype.png"
 
 
 class Wall:
