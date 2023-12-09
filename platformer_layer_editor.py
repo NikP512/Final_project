@@ -2,6 +2,7 @@ import pygame
 from platformer_player import *
 from platformer_objects import *
 from platformer_layer import *
+import random
 
 
 class layer_editor:
@@ -34,7 +35,7 @@ class layer_editor:
     def add_wall(self):
         keys = pygame.key.get_pressed()
         surf = pygame.Surface((abs(self.x - self.start_x), abs(self.y - self.start_y)))
-        surf.fill((255,205,255))
+        surf.fill((255,255,0))
         surf.set_alpha(100)
         self.screen.blit(surf, (min(self.start_x, self.x), min(self.start_y, self.y)))
         if (keys[pygame.K_s]) and (self.stage <= 1):
@@ -44,6 +45,21 @@ class layer_editor:
         if (keys[pygame.K_e]) and (self.stage == 1) and (pygame.time.get_ticks() - self.time > 200):
             self.end_x = self.x
             self.end_y = self.y
+            self.stage += 1
+            self.time = pygame.time.get_ticks()
+        if self.stage == 2:
+            self.stage = 1
+            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,(self.start_x + self.end_x)//2,
+                            (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
+
+    def add_wall_random(self):
+        if self.stage <= 1:
+            self.start_x = random.randint(0, 800)
+            self.start_y = random.randint(0, 800)
+            self.stage = 1
+        if (self.stage == 1) and (pygame.time.get_ticks() - self.time > 200):
+            self.end_x = random.randint(self.start_x + 10, self.start_x + 20)
+            self.end_y = random.randint(self.start_y + 1, self.start_y + 5)
             self.stage += 1
             self.time = pygame.time.get_ticks()
         if self.stage == 2:
