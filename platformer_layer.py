@@ -42,10 +42,10 @@ def check_space(main_object, objects, screen, hitbox_on):
     порядок в списке: вверх, право, низ, лево
     hitbox_on -- булева переменая которая определяет отрисовывается ли хитбокс
      """
-    rect_up = pygame.Rect(main_object.x - main_object.w / 2.4, main_object.y - main_object.h / 2 - 1, main_object.w/1.2, 2)
-    rect_right = pygame.Rect(main_object.x + main_object.w / 2 , main_object.y - main_object.h / 2.1, 2, main_object.h/1.05)
-    rect_down = pygame.Rect(main_object.x - main_object.w / 2.4, main_object.y + main_object.h / 2 + 1, main_object.w/1.2, 2)
-    rect_left = pygame.Rect(main_object.x - main_object.w / 2 - 2, main_object.y - main_object.h / 2.1, 2, main_object.h/1.05)
+    rect_up = pygame.Rect(main_object.x - main_object.w / 2.4, main_object.y - main_object.h / 2 -2 - main_object.vy, main_object.w/1.2, 6)
+    rect_right = pygame.Rect(main_object.x + main_object.w / 2, main_object.y - main_object.h / 2.2 + main_object.vx, 2, main_object.h/1.1)
+    rect_down = pygame.Rect(main_object.x - main_object.w / 2.4, main_object.y + main_object.h / 2 - 6 - main_object.vy, main_object.w/1.2, 6)
+    rect_left = pygame.Rect(main_object.x - main_object.w / 2 - 2, main_object.y - main_object.h / 2.2 - main_object.vx, 2, main_object.h/1.1)
     free_spaces = [False, False, False, False]
 
     for object in objects:

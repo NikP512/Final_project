@@ -66,6 +66,14 @@ class Player:
             if keys[pygame.K_LEFT] and (self.vx > -1):
                 self.vx -= 0.1
 
+        if (not self.place_down) and (self.vx < 0):
+            self.vx += 0.01
+        elif (not self.place_down) and (self.vx > 0):
+            self.vx -= 0.01
+
+        if abs(self.vx) < 0.02:
+            self.vx = 0
+
 
     def jump(self, keys):
         """Метод прыжка
