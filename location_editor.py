@@ -70,7 +70,8 @@ class LocationEditor:
             # self.time = pygame.time.get_ticks()
         # if self.stage == 2:
             # self.stage = 1
-            # self.layer.objects.append(self.classes_dictionary[self.type](self.screen, (self.start_x + self.end_x)//2, (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
+            # self.layer.objects.append(self.classes_dictionary[self.type](self.screen, (self.start_x + self.end_x)//2,
+            # (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
 
     def write_objects_to_file(self, output_filename):
         """

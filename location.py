@@ -2,7 +2,6 @@ import pygame
 from objects import *
 
 
-
 class Location:
     """Класс, описывающий слой уровня. Каждый слой имеет свой id и список объектов, на нем расположенных."""
     def __init__(self, screen, ident):
