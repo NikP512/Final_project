@@ -58,23 +58,19 @@ class LocationEditor:
                                                                          abs(self.start_x-self.end_x),
                                                                          abs(self.start_y-self.end_y)))
 
-    def add_wall_random(self):
-        if self.stage <= 1:
-            self.start_x = random.randint(0, 800)
-            self.start_y = random.randint(0, 800)
-            self.stage = 1
-        if (self.stage == 1) and (pygame.time.get_ticks() - self.time > 200):
-            self.end_x = random.randint(self.start_x + 10, self.start_x + 20)
-            self.end_y = random.randint(self.start_y + 1, self.start_y + 5)
-            self.stage += 1
-            self.time = pygame.time.get_ticks()
-        if self.stage == 2:
-            self.stage = 1
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
-                                                                         (self.start_x + self.end_x)//2,
-                                                                         (self.start_y+self.end_y)//2,
-                                                                         abs(self.start_x-self.end_x),
-                                                                         abs(self.start_y-self.end_y)))
+    # def add_wall_random(self):
+        # if self.stage <= 1:
+            # self.start_x = random.randint(0, 800)
+            # self.start_y = random.randint(0, 800)
+            # self.stage = 1
+        # if (self.stage == 1) and (pygame.time.get_ticks() - self.time > 200):
+            # self.end_x = random.randint(self.start_x + 10, self.start_x + 20)
+            # self.end_y = random.randint(self.start_y + 1, self.start_y + 5)
+            # self.stage += 1
+            # self.time = pygame.time.get_ticks()
+        # if self.stage == 2:
+            # self.stage = 1
+            # self.layer.objects.append(self.classes_dictionary[self.type](self.screen, (self.start_x + self.end_x)//2, (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
 
     def write_objects_to_file(self, output_filename):
         """
