@@ -1,11 +1,11 @@
 import pygame
-from platformer_player import *
-from platformer_objects import *
-from platformer_layer import *
+from player import *
+from objects import *
+from location import *
 import random
 
 
-class layer_editor:
+class LocationEditor:
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
@@ -30,12 +30,14 @@ class layer_editor:
             rect = pygame.Rect(object.x - object.w / 2, object.y - object.h / 2, object.w, object.h)
             is_there_block += rect.collidepoint(self.x, self.y)
         if key == 1 or keys[pygame.K_q] and not is_there_block:
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen, self.x//20*20 + 10, self.y//20*20 + 10))
+            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
+                                                                         self.x//20*20 + 10,
+                                                                         self.y//20*20 + 10))
 
     def add_wall(self):
         keys = pygame.key.get_pressed()
         surf = pygame.Surface((abs(self.x - self.start_x), abs(self.y - self.start_y)))
-        surf.fill((255,255,0))
+        surf.fill((255, 255, 0))
         surf.set_alpha(100)
         self.screen.blit(surf, (min(self.start_x, self.x), min(self.start_y, self.y)))
         if (keys[pygame.K_s]) and (self.stage <= 1):
@@ -49,8 +51,11 @@ class layer_editor:
             self.time = pygame.time.get_ticks()
         if self.stage == 2:
             self.stage = 1
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,(self.start_x + self.end_x)//2,
-                            (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
+            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
+                                                                         (self.start_x + self.end_x)//2,
+                                                                         (self.start_y+self.end_y)//2,
+                                                                         abs(self.start_x-self.end_x),
+                                                                         abs(self.start_y-self.end_y)))
 
     def add_wall_random(self):
         if self.stage <= 1:
@@ -64,9 +69,11 @@ class layer_editor:
             self.time = pygame.time.get_ticks()
         if self.stage == 2:
             self.stage = 1
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,(self.start_x + self.end_x)//2,
-                            (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
-
+            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
+                                                                         (self.start_x + self.end_x)//2,
+                                                                         (self.start_y+self.end_y)//2,
+                                                                         abs(self.start_x-self.end_x),
+                                                                         abs(self.start_y-self.end_y)))
 
 
     def write_objects_to_file(self, output_filename):
@@ -106,6 +113,7 @@ def check_events():
     keys = pygame.key.get_pressed()
     return keys
 
+
 def main():
     pygame.init()
 
@@ -113,9 +121,9 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     layers = list()
-    layers.append(ScreenLayer(screen, 1, []))
-    layers.append(ScreenLayer(screen, 2, []))
-    editor = layer_editor(screen, layers[0])
+    layers.append(Location(screen, 1, []))
+    layers.append(Location(screen, 2, []))
+    editor = LocationEditor(screen, layers[0])
 
     while RUNNING:
         screen.fill((255, 255, 255))

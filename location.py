@@ -1,7 +1,8 @@
 import pygame
-from platformer_objects import *
+from objects import *
 
-class ScreenLayer:
+
+class Location:
     """Класс, описывающий слой уровня. Каждый слой имеет свой id и список объектов, на нем расположенных."""
     def __init__(self, screen, id, objects):
         self.screen = screen
