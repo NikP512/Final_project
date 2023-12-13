@@ -3,6 +3,12 @@ from player import *
 from objects import *
 from location import *
 import random
+"""Управление:
+1 -- режим добавленния блоков
+q -- добавить блок в точке где находится курсор
+2 -- режим добавления стен
+s -- выбор начала стены 
+e -- выбор конца стены и ее создание"""
 
 
 class LocationEditor:
