@@ -1,20 +1,5 @@
 import pygame
-
-
-class Floor:
-    """Класс, описывающий положение пола на данном слое. Пол представляет собой прямоугольник,
-    с координатами (x, y) верхнего левого угла, высотой h и шириной w."""
-    def __init__(self, screen, x, y, w, h):
-        self.id = "floor"
-        self.screen = screen
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
-
-    def draw(self):
-        """Функция, рисующая пол."""
-        pygame.draw.rect(self.screen, (255, 0, 0), (self.x, self.y, self.w, self.h))
+from location import *
 
 
 class Block:
@@ -43,12 +28,13 @@ class Wall:
 
 class Trap:
     """Класс "Trap" описывает ловушки"""
-    def __init__(self, screen, x, y, r):
+    def __init__(self, screen, x, y, w, h):
         self.id = "trap"
         self.screen = screen
         self.x = x
         self.y = y
-        self.r = r
+        self.w = w
+        self.h = h
         self.file_name = "trap.png"
 
 

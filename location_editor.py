@@ -11,7 +11,8 @@ class LocationEditor:
         self.layer = layer
         self.classes_dictionary = {30: Block, 31: Wall}
         self.type = 30
-        self.x, self.y = pygame.mouse.get_pos()
+        self.x = 0
+        self.y = 0
         self.stage = 0
         self.start_x = 0
         self.start_y = 0
@@ -26,8 +27,8 @@ class LocationEditor:
         keys = pygame.key.get_pressed()
         key = pygame.MOUSEBUTTONDOWN
         is_there_block = False
-        for object in self.layer.objects:
-            rect = pygame.Rect(object.x - object.w / 2, object.y - object.h / 2, object.w, object.h)
+        for obj in self.layer.objects:
+            rect = pygame.Rect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h)
             is_there_block += rect.collidepoint(self.x, self.y)
         if key == 1 or keys[pygame.K_q] and not is_there_block:
             self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
@@ -75,17 +76,18 @@ class LocationEditor:
                                                                          abs(self.start_x-self.end_x),
                                                                          abs(self.start_y-self.end_y)))
 
-
     def write_objects_to_file(self, output_filename):
         """
         """
         with open(output_filename, 'w') as out_file:
-            for object in self.layer.objects:
-                s = object.id
+            for obj in self.layer.objects:
+                s = obj.id
                 if s == "block":
-                    s += " " + str(object.x) + " " + str(object.y) + "\n"
+                    s += " " + str(obj.x) + " " + str(obj.y) + "\n"
                 elif s == "wall":
-                    s += " " + str(object.x) + " " + str(object.y) + " " + str(object.w) + " " + str(object.h) + "\n"
+                    s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + "\n"
+                elif s == "trap":
+                    s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + "\n"
                 out_file.write(s)
 
     def choose_type(self):
@@ -120,16 +122,13 @@ def main():
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    layers = list()
-    layers.append(Location(screen, 1, []))
-    layers.append(Location(screen, 2, []))
-    editor = LocationEditor(screen, layers[0])
+    location = Location(screen, 1)
+    editor = LocationEditor(screen, location)
 
     while RUNNING:
         screen.fill((255, 255, 255))
         keys = check_events()
-        for layer in layers:
-            layer.update()
+        location.update()
         editor.choose_type()
         editor.set_mouse_position()
         if editor.type == 30:
