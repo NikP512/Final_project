@@ -9,9 +9,9 @@ class Location:
         self.id = str(ident)
         self.objects = []
         self.object_classes = {"block": Block}
-        self.image_block = pygame.image.load("block.png")
-        self.image_wall = pygame.image.load("wall.png")
-        self.image_trap = pygame.image.load("trap.png")
+        self.image_block = pygame.image.load("pictures/block.png")
+        self.image_wall = pygame.image.load("pictures/wall.png")
+        self.image_trap = pygame.image.load("pictures/trap.png")
 
     def update(self):
         for obj in self.objects:
@@ -29,7 +29,6 @@ class Location:
                 scale_image = pygame.transform.scale(self.image_trap, (obj.w, obj.h))
                 scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
                 obj.screen.blit(scale_image, scale_rect)
-
 
     def set_object_from_file(self, file_name):
         with open(file_name) as input_file:
