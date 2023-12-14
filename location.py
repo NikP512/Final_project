@@ -17,8 +17,8 @@ class Location:
         for obj in self.objects:
             """Отрисовка слоя
             file_name -- название файла, содержащего изображение слоя"""
-            if obj.id == "trap":
-                scale_image = pygame.transform.scale(self.image_trap, (obj.w, obj.h))
+            if obj.id == "wall":
+                scale_image = pygame.transform.scale(self.image_wall, (obj.w, obj.h))
                 scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
                 obj.screen.blit(scale_image, scale_rect)
             if obj.id == "block":
