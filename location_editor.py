@@ -4,6 +4,8 @@ from objects import *
 from location import *
 import random
 """Управление:
+В любом режиме
+d -- удалить обЪект в точке где находиться курсор
 1 -- режим добавленния блоков
 q -- добавить блок в точке где находится курсор
 2 -- режим добавления стен
@@ -12,6 +14,13 @@ e -- выбор конца стены и ее создание"""
 
 
 class LocationEditor:
+    """
+    Класс описывающий редактор
+    self.classes_dictionary -- список доступных объектов
+    self.type -- текущий режим соответствующий ключу класса текущего объекта
+    self.x, self.y -- текущие координаты курсора
+    self.start_x, self.start_y, self.end_x, self.end_y -- координаты точек начала и конца чего-то
+    """
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
@@ -30,6 +39,8 @@ class LocationEditor:
         self.x, self.y = pygame.mouse.get_pos()
 
     def delete(self):
+        """функция удаления
+        """
         keys = pygame.key.get_pressed()
         for object in self.layer.objects:
             object_rect = pygame.Rect(object.x - object.w / 2, object.y - object.h / 2, object.w, object.h)
@@ -37,6 +48,8 @@ class LocationEditor:
                 self.layer.objects.pop(self.layer.objects.index(object))
 
     def add_block(self):
+        """функция добавления блоков
+        """
         keys = pygame.key.get_pressed()
         key = pygame.MOUSEBUTTONDOWN
         is_there_block = False
@@ -49,6 +62,10 @@ class LocationEditor:
                                                                          self.y//20*20 + 10))
 
     def add_wall(self):
+        """функция добавления стен
+        при нажатии s -- создает один из углов стены,
+        при нажатие e -- создает угол противоположный исходному и создает стену
+        """
         keys = pygame.key.get_pressed()
         surf = pygame.Surface((abs(self.x - self.start_x), abs(self.y - self.start_y)))
         surf.fill((255, 255, 0))
