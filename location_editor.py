@@ -19,7 +19,7 @@ class LocationEditor:
         self.type = 30
         self.x = 0
         self.y = 0
-        self.stage = 0
+        self.stage = 1
         self.start_x = 0
         self.start_y = 0
         self.end_x = 0
@@ -28,6 +28,13 @@ class LocationEditor:
 
     def set_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
+
+    def delete(self):
+        keys = pygame.key.get_pressed()
+        for object in self.layer.objects:
+            object_rect = pygame.Rect(object.x - object.w / 2, object.y - object.h / 2, object.w, object.h)
+            if object_rect.collidepoint((self.x, self.y)) and keys[pygame.K_d]:
+                self.layer.objects.pop(self.layer.objects.index(object))
 
     def add_block(self):
         keys = pygame.key.get_pressed()
@@ -134,6 +141,7 @@ def main():
         location.update()
         editor.choose_type()
         editor.set_mouse_position()
+        editor.delete()
         if editor.type == 30:
             editor.add_block()
         if editor.type == 31:
