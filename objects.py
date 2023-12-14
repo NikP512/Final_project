@@ -10,7 +10,6 @@ class Block:
         self.y = y
         self.w = 20
         self.h = 20
-        self.file_name = "block.png"
 
 
 class Wall:
@@ -22,7 +21,6 @@ class Wall:
         self.y = y
         self.w = w
         self.h = h
-        self.file_name = "wall.png"
 
 
 class Trap:
@@ -34,7 +32,6 @@ class Trap:
         self.y = y
         self.w = w
         self.h = h
-        self.file_name = "trap.png"
 
 
 if __name__ == "__main__":

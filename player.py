@@ -25,7 +25,7 @@ class Player:
         self.place_down = False
         self.place_left = False
         self.jump_time = pygame.time.get_ticks() - 1000
-        self.image = pygame.image.load("player.jpg")
+        self.image = pygame.image.load("pictures/player.jpg")
 
     def get_coordinates(self, x, y):
         self.x = x
