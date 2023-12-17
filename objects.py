@@ -8,8 +8,8 @@ class Block:
         self.screen = screen
         self.x = x
         self.y = y
-        self.w = 20
-        self.h = 20
+        self.w = 40
+        self.h = 40
 
 
 class Wall:
