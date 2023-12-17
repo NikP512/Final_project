@@ -19,11 +19,14 @@ class LocationEditor:
     self.type -- текущий режим соответствующий ключу класса текущего объекта
     self.x, self.y -- текущие координаты курсора
     self.start_x, self.start_y, self.end_x, self.end_y -- координаты точек начала и конца чего-то
+    self.block_w, self.block_h -- ширина и высота блоков
+    self.file_name -- название редактируемого файла
+    self.current_object -- редактируемый объект
     """
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
-        self.classes_dictionary = {30: Block, 31: Wall}
+        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap}
         self.type = 30
         self.x = 0
         self.y = 0
@@ -36,8 +39,10 @@ class LocationEditor:
         self.block_w = Block(self.screen, 0, 0).w
         self.block_h = Block(self.screen, 0, 0).h
         self.file_name = input()
+        self.current_object = Wall(self.screen, 0,0,0,0)
+        self.current_object_surf = pygame.Surface((0, 0))
 
-    def set_mouse_position(self):
+    def get_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
 
     def delete(self):
@@ -63,7 +68,7 @@ class LocationEditor:
                                                                          self.x//self.block_w*self.block_w + self.block_w//2,
                                                                          self.y//self.block_h*self.block_h + self.block_h//2))
 
-    def add_wall(self):
+    def add_wall_like_object(self):
         """функция добавления стен
         при нажатии s -- создает один из углов стены,
         при нажатие e -- создает угол противоположный исходному и создает стену
@@ -105,18 +110,29 @@ class LocationEditor:
             # self.layer.objects.append(self.classes_dictionary[self.type](self.screen, (self.start_x + self.end_x)//2,
             # (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
 
+    def choose_object(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_c]:
+            for obj in self.layer.objects:
+                if obj.id in ["wall", "trap"]:
+                    rect = pygame.Rect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h)
+                    if rect.collidepoint(self.x, self.y):
+                        self.current_object = obj
+                        self.current_object_surf = pygame.Surface((obj.w, obj.h))
+                        self.current_object_surf.fill((0, 255, 255))
+                        self.current_object_surf.set_alpha(100)
+                        break
+
     def write_objects_to_file(self):
         """
         """
-        with open(self.file_name, 'w') as out_file:
+        with (open(self.file_name, 'w') as out_file):
             for obj in self.layer.objects:
                 s = obj.id
                 if s == "block":
                     s += " " + str(obj.x) + " " + str(obj.y) + "\n"
-                elif s == "wall":
-                    s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + "\n"
-                elif s == "trap":
-                    s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + "\n"
+                elif s in ["wall", "trap"]:
+                    s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + " " + str(obj.vx) + " " + str(obj.vy) + "\n"
                 out_file.write(s)
 
     def choose_type(self):
@@ -159,13 +175,17 @@ def main():
         screen.fill((255, 255, 255))
         keys = check_events()
         location.update()
+        editor.screen.blit(editor.current_object_surf,
+                           (editor.current_object.x - editor.current_object.w//2,
+                            editor.current_object.y - editor.current_object.h//2))
         editor.choose_type()
-        editor.set_mouse_position()
+        editor.get_mouse_position()
         editor.delete()
+        editor.choose_object()
         if editor.type == 30:
             editor.add_block()
-        if editor.type == 31:
-            editor.add_wall()
+        if editor.type in [31, 32]:
+            editor.add_wall_like_object()
         clock.tick(FPS)
         pygame.display.update()
 

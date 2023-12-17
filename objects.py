@@ -21,6 +21,8 @@ class Wall:
         self.y = y
         self.w = w
         self.h = h
+        self.vx = 0
+        self.vy = 0
 
 
 class Trap:

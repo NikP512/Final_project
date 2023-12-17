@@ -52,12 +52,12 @@ class Location:
                         x, y = line.split()[1:]
                         self.objects.append(Block(self.screen, int(x), int(y)))
 
-                    if obj_id == "wall":
-                        x, y, w, h = line.split()[1:]
+                    if obj_id in ["wall", "trap"]:
+                        x, y, w, h, vx, vy = line.split()[1:]
                         self.objects.append(Wall(self.screen, int(x), int(y), int(w), int(h)))
 
                     if obj_id == "trap":
-                        x, y, w, h = line.split()[1:]
+                        x, y, w, h, vx, vy = line.split()[1:]
                         self.objects.append(Trap(self.screen, int(x), int(y), int(w), int(h)))
 
 
