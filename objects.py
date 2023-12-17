@@ -30,8 +30,13 @@ class Trap:
         self.screen = screen
         self.x = x
         self.y = y
+        self.vx = 0
+        self.vy = 0
         self.w = w
         self.h = h
+
+    def move(self):
+        pass
 
 
 if __name__ == "__main__":

@@ -1,5 +1,15 @@
-import pygame
 from objects import *
+
+
+class Level:
+    def __init__(self, screen, ident, player):
+        self.screen = screen
+        self.id = str(ident)
+        self.locations = []
+        self.player = player
+
+    def check_win(self):
+        pass
 
 
 class Location:
@@ -15,8 +25,7 @@ class Location:
 
     def update(self):
         for obj in self.objects:
-            """Отрисовка слоя
-            file_name -- название файла, содержащего изображение слоя"""
+            """Отрисовка слоя"""
             if obj.id == "wall":
                 scale_image = pygame.transform.scale(self.image_wall, (obj.w, obj.h))
                 scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
