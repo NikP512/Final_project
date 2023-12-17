@@ -12,7 +12,6 @@ q -- добавить блок в точке где находится курс�
 s -- выбор начала стены 
 e -- выбор конца стены и ее создание"""
 
-
 class LocationEditor:
     """
     Класс описывающий редактор
@@ -34,6 +33,8 @@ class LocationEditor:
         self.end_x = 0
         self.end_y = 0
         self.time = pygame.time.get_ticks()
+        self.block_w = Block(self.screen, 0, 0).w
+        self.block_h = Block(self.screen, 0, 0).h
 
     def set_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
@@ -58,8 +59,8 @@ class LocationEditor:
             is_there_block += rect.collidepoint(self.x, self.y)
         if key == 1 or keys[pygame.K_q] and not is_there_block:
             self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
-                                                                         self.x//20*20 + 10,
-                                                                         self.y//20*20 + 10))
+                                                                         self.x//self.block_w*self.block_w + self.block_w//2,
+                                                                         self.y//self.block_h*self.block_h + self.block_h//2))
 
     def add_wall(self):
         """функция добавления стен
