@@ -6,6 +6,8 @@ import random
 """Управление:
 В любом режиме
 d -- удалить обЪект в точке где находиться курсор
+c -- выбрать объект для редактирования
+для выбраного объекта стрелочками изменяется скорость в соответствующем направлении
 1 -- режим добавленния блоков
 q -- добавить блок в точке где находится курсор
 2 -- режим добавления стен
@@ -39,7 +41,7 @@ class LocationEditor:
         self.block_w = Block(self.screen, 0, 0).w
         self.block_h = Block(self.screen, 0, 0).h
         self.file_name = input()
-        self.current_object = Wall(self.screen, 0,0,0,0)
+        self.current_object = Wall(self.screen, 0,0,0,0, 0, 0)
         self.current_object_surf = pygame.Surface((0, 0))
 
     def get_mouse_position(self):
@@ -93,7 +95,8 @@ class LocationEditor:
                                                                          (self.start_x + self.end_x)//2,
                                                                          (self.start_y+self.end_y)//2,
                                                                          abs(self.start_x-self.end_x),
-                                                                         abs(self.start_y-self.end_y)))
+                                                                         abs(self.start_y-self.end_y),
+                                                                         0, 0))
 
     # def add_wall_random(self):
         # if self.stage <= 1:
@@ -122,6 +125,17 @@ class LocationEditor:
                         self.current_object_surf.fill((0, 255, 255))
                         self.current_object_surf.set_alpha(100)
                         break
+
+    def change_current_object(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            self.current_object.vy += 0.1
+        if keys[pygame.K_RIGHT]:
+            self.current_object.vx += 0.1
+        if keys[pygame.K_DOWN]:
+            self.current_object.vy -= 0.1
+        if keys[pygame.K_LEFT]:
+            self.current_object.vy -= 0.1
 
     def write_objects_to_file(self):
         """
@@ -182,6 +196,7 @@ def main():
         editor.get_mouse_position()
         editor.delete()
         editor.choose_object()
+        editor.change_current_object()
         if editor.type == 30:
             editor.add_block()
         if editor.type in [31, 32]:

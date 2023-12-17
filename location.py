@@ -54,11 +54,11 @@ class Location:
 
                     if obj_id in ["wall", "trap"]:
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Wall(self.screen, int(x), int(y), int(w), int(h)))
+                        self.objects.append(Wall(self.screen, int(x), int(y), int(w), int(h), float(vx), float(vy)))
 
                     if obj_id == "trap":
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Trap(self.screen, int(x), int(y), int(w), int(h)))
+                        self.objects.append(Trap(self.screen, int(x), int(y), int(w), int(h), float(vx), float(vy)))
 
 
 if __name__ == "__main__":

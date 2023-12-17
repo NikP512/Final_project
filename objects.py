@@ -14,26 +14,26 @@ class Block:
 
 class Wall:
     """Класс "Wall" описывает стены"""
-    def __init__(self, screen, x, y, w, h):
+    def __init__(self, screen, x, y, w, h, vx, vy):
         self.id = "wall"
         self.screen = screen
         self.x = x
         self.y = y
         self.w = w
         self.h = h
-        self.vx = 0
-        self.vy = 0
+        self.vx = vx
+        self.vy = vy
 
 
 class Trap:
     """Класс "Trap" описывает ловушки"""
-    def __init__(self, screen, x, y, w, h):
+    def __init__(self, screen, x, y, w, h, vx, vy):
         self.id = "trap"
         self.screen = screen
         self.x = x
         self.y = y
-        self.vx = 0
-        self.vy = 0
+        self.vx = vx
+        self.vy = vy
         self.w = w
         self.h = h
 
