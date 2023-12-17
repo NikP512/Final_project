@@ -35,6 +35,7 @@ class LocationEditor:
         self.time = pygame.time.get_ticks()
         self.block_w = Block(self.screen, 0, 0).w
         self.block_h = Block(self.screen, 0, 0).h
+        self.file_name = input()
 
     def set_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
@@ -104,10 +105,10 @@ class LocationEditor:
             # self.layer.objects.append(self.classes_dictionary[self.type](self.screen, (self.start_x + self.end_x)//2,
             # (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
 
-    def write_objects_to_file(self, output_filename):
+    def write_objects_to_file(self):
         """
         """
-        with open(output_filename, 'w') as out_file:
+        with open(self.file_name, 'w') as out_file:
             for obj in self.layer.objects:
                 s = obj.id
                 if s == "block":
@@ -152,6 +153,7 @@ def main():
 
     location = Location(screen, 1)
     editor = LocationEditor(screen, location)
+    location.set_object_from_file(editor.file_name)
 
     while RUNNING:
         screen.fill((255, 255, 255))
@@ -167,7 +169,7 @@ def main():
         clock.tick(FPS)
         pygame.display.update()
 
-    editor.write_objects_to_file("1.1")
+    editor.write_objects_to_file()
     pygame.quit()
 
 
