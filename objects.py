@@ -36,7 +36,9 @@ class Trap:
         self.h = h
 
     def move(self):
-        pass
+        "Функции движения ловушек. Метод описывает перемещение ловушки за один кадр перерисовки."
+        self.x += self.vx
+        self.y += self.vy
 
 
 if __name__ == "__main__":
