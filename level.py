@@ -12,6 +12,15 @@ class Level:
     def check_win(self):
         pass
 
+    def update(self):
+        pass
+
+    def check_events(self):
+        pass
+
+    def check_space(self):
+        pass
+
 
 class Location:
     """Класс, описывающий слой уровня. Каждый слой имеет свой id и список объектов, на нем расположенных."""
@@ -20,25 +29,17 @@ class Location:
         self.id = str(ident)
         self.objects = []
         self.object_classes = {"block": Block}
-        self.image_block = pygame.image.load("pictures/block.png")
-        self.image_wall = pygame.image.load("pictures/wall.png")
-        self.image_trap = pygame.image.load("pictures/trap.png")
+        self.images = {"block": pygame.image.load("pictures/block.png"),
+                       "wall": pygame.image.load("pictures/wall.png"),
+                       "trap": pygame.image.load("pictures/trap.png")}
 
     def update(self):
         for obj in self.objects:
             """Отрисовка слоя"""
-            if obj.id == "wall":
-                scale_image = pygame.transform.scale(self.image_wall, (obj.w, obj.h))
-                scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
-                obj.screen.blit(scale_image, scale_rect)
-            if obj.id == "block":
-                scale_image = pygame.transform.scale(self.image_block, (obj.w, obj.h))
-                scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
-                obj.screen.blit(scale_image, scale_rect)
-            if obj.id == "trap":
-                scale_image = pygame.transform.scale(self.image_trap, (obj.w, obj.h))
-                scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
-                obj.screen.blit(scale_image, scale_rect)
+            image = self.images.get(obj.id, None)
+            scale_image = pygame.transform.scale(image, (obj.w, obj.h))
+            scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
+            obj.screen.blit(scale_image, scale_rect)
 
     def set_object_from_file(self, file_name):
         if os.path.exists(file_name):

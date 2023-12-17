@@ -1,6 +1,3 @@
-import pygame
-
-
 class Block:
     """Класс "Block" описывает блоки."""
     def __init__(self, screen, x, y):
