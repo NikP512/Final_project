@@ -128,6 +128,9 @@ class LocationEditor:
 
     def change_current_object(self):
         keys = pygame.key.get_pressed()
+        text = "vx:" + str(round(self.current_object.vx,1)) + " " + "vy:" + str(round(self.current_object.vy,1))
+        text = pygame.font.Font(None, 30).render(text,1, (90, 40, 250))
+        self.screen.blit(text, (0, 20))
         if keys[pygame.K_UP]:
             self.current_object.vy += 0.1
         if keys[pygame.K_RIGHT]:
@@ -135,7 +138,7 @@ class LocationEditor:
         if keys[pygame.K_DOWN]:
             self.current_object.vy -= 0.1
         if keys[pygame.K_LEFT]:
-            self.current_object.vy -= 0.1
+            self.current_object.vx -= 0.1
 
     def write_objects_to_file(self):
         """
