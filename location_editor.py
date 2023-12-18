@@ -111,8 +111,7 @@ class LocationEditor:
             rect = pygame.Rect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h)
             is_there_block += rect.collidepoint(self.x, self.y)
         if key == 1 or keys[pygame.K_q] and not is_there_block:
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
-                                                                         self.x//self.block_w*self.block_w + self.block_w//2,
+            self.layer.objects.append(self.classes_dictionary[self.type](self.x//self.block_w*self.block_w + self.block_w//2,
                                                                          self.y//self.block_h*self.block_h + self.block_h//2))
 
     def add_wall_like_object(self):
