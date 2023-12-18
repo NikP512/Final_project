@@ -8,6 +8,7 @@ import random
 d -- удалить обЪект в точке где находиться курсор
 shif + d -- удалить все
 c -- выбрать объект для редактирования
+m -- отображение движения
 для выбраного объекта стрелочками изменяется скорость в соответствующем направлении
 1 -- режим добавленния блоков
 q -- добавить блок в точке где находится курсор
@@ -62,6 +63,21 @@ class LocationEditor:
         keys = pygame.key.get_pressed()
         if (pygame.KMOD_SHIFT & pygame.key.get_mods()) and keys[pygame.K_d]:
             self.layer.objects = []
+
+    def motion_viewing(self, events, file_name):
+        """
+        при нажатии m запускает движение объектов
+        при отжатии m возвращает объекты в состояние, которое было до начала движения
+        """
+        keys = pygame.key.get_pressed()
+        for event in events:
+            if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_m):
+                self.write_objects_to_file()
+            if (event.type == pygame.KEYUP) and (event.key == pygame.K_m):
+                self.layer.objects = []
+                self.layer.set_object_from_file(file_name)
+        if keys[pygame.K_m]:
+            self.layer.move()
 
     def add_block(self):
         """функция добавления блоков
@@ -172,13 +188,13 @@ RUNNING = True
 FPS = 60
 
 
-def check_events():
+def check_events(events):
     """Функция, обрабатывающая нажатие клавиш.
     Возвращает список всех нажатых клавиш.
     """
     global RUNNING
 
-    for event in pygame.event.get():
+    for event in events:
         if event.type == pygame.QUIT:
             RUNNING = False
     keys = pygame.key.get_pressed()
@@ -197,7 +213,8 @@ def main():
 
     while RUNNING:
         screen.fill((255, 255, 255))
-        keys = check_events()
+        events = pygame.event.get()
+        keys = check_events(events)
         location.draw()
         editor.screen.blit(editor.current_object_surf,
                            (editor.current_object.x - editor.current_object.w//2,
@@ -208,6 +225,7 @@ def main():
         editor.delete_all()
         editor.choose_object()
         editor.change_current_object()
+        editor.motion_viewing(events, editor.file_name)
         if editor.type == 30:
             editor.add_block()
         if editor.type in [31, 32]:

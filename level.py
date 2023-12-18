@@ -43,9 +43,12 @@ class Location:
             scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
             self.screen.blit(scale_image, scale_rect)
 
-    def update(self):
+    def move(self):
         for obj in self.objects:
             obj.move()
+
+    def update(self):
+        self.move()
         self.draw()
 
     def set_object_from_file(self, file_name):
@@ -62,7 +65,7 @@ class Location:
 
                     if obj_id in ["wall", "trap"]:
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Wall(self.screen, round(float(x), 0), int(round(float(y), 0)), int(w), int(h), float(vx), float(vy)))
+                        self.objects.append(Wall(self.screen, round(float(x), 0), round(float(y), 0), int(w), int(h), float(vx), float(vy)))
 
 
 if __name__ == "__main__":
