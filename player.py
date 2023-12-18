@@ -13,14 +13,12 @@ class Player:
     """
     def __init__(self, screen, number):
         self.screen = screen
-
         self.x = 0
         self.y = 0
         self.vx = 0
         self.vy = 0
         self.w = 40
         self.h = 60
-
         self.place_up = False
         self.place_right = False
         self.place_down = False

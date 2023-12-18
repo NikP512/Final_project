@@ -28,12 +28,19 @@ def main():
 
     n = 1
     while os.path.exists(file_name + str(n)):
-        level.locations.append(Location(screen, "1." + str(n)))
-        level.locations[-1].set_object_from_file(file_name + str(n))
+        level.locations["1." + str(n)] = Location(screen)
+        level.locations["1." + str(n)].set_object_from_file(file_name + str(n))
         n += 1
 
     while level.running:
-        pass
+        level.update()
+        pygame.display.update()
+        level.check_events(pygame.event.get())
+        level.check_win()
+
+        clock.tick(fps)
+
+    main()
 
     pygame.quit()
 

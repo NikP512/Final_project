@@ -1,43 +1,39 @@
-class Block:
-    """Класс "Block" описывает блоки."""
-    def __init__(self, screen, x, y):
-        self.id = "block"
-        self.screen = screen
-        self.x = x
-        self.y = y
-        self.w = 40
-        self.h = 40
-
-
-class Wall:
-    """Класс "Wall" описывает стены"""
-    def __init__(self, screen, x, y, w, h, vx, vy):
-        self.id = "wall"
-        self.screen = screen
+class Object:
+    def __init__(self, x, y, w, h, vx=0, vy=0):
         self.x = x
         self.y = y
         self.w = w
         self.h = h
         self.vx = vx
         self.vy = vy
-
-
-class Trap:
-    """Класс "Trap" описывает ловушки"""
-    def __init__(self, screen, x, y, w, h, vx, vy):
-        self.id = "trap"
-        self.screen = screen
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.w = w
-        self.h = h
 
     def move(self):
-        "Функции движения ловушек. Метод описывает перемещение ловушки за один кадр перерисовки."
         self.x += self.vx
         self.y += self.vy
+
+
+class Block(Object):
+    """Класс "Block" описывает блоки."""
+    def __init__(self, screen, x, y):
+        super().__init__(screen, x, y, 40, 40)
+        self.id = "block"
+
+    def move(self):
+        pass
+
+
+class Wall(Object):
+    """Класс "Wall" описывает стены"""
+    def __init__(self, screen, x, y, w, h, vx, vy):
+        super().__init__(screen, x, y, w, h, vx, vy)
+        self.id = "wall"
+
+
+class Trap(Object):
+    """Класс "Trap" описывает ловушки"""
+    def __init__(self, screen, x, y, w, h, vx, vy):
+        super().__init__(screen, x, y, w, h, vx, vy)
+        self.id = "trap"
 
 
 if __name__ == "__main__":

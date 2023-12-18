@@ -1,5 +1,5 @@
 import pygame
-
+from objects import Object
 
 class Menu:
     def __init__(self, screen):
@@ -24,9 +24,13 @@ class Menu:
             pass
 
 
-class Button:
+class Button(Object):
     """Добавить констркутор. Атрибуты: координатцы центра кнопки x, y и размеры w, h."""
-    pass
+    def __init__(self, x, y, w, h):
+        super().__init__(x, y, w, h)
+
+    def move(self):
+        pass
 
 
 if __name__ == "__main__":
