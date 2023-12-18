@@ -36,6 +36,7 @@ class Location:
         self.images = {"block": pygame.image.load("pictures/block.png"),
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png")}
+        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap}
 
     def update(self):
         for obj in self.objects:
@@ -57,13 +58,11 @@ class Location:
                         x, y = line.split()[1:]
                         self.objects.append(Block(int(x), int(y)))
 
-                    if obj_id == "wall":
+                    if obj_id in ["wall", "trap"]:
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Wall(int(x), int(y), w, h, vx, vy))
-
-                    if obj_id == "trap":
-                        x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Trap(int(x), int(y), w, h, vx, vy))
+                        self.objects.append(
+                            self.object_type_dictionary[obj_id](round(float(x), 0), round(float(y), 0),
+                                                                int(w), int(h), float(vx), float(vy)))
 
 
 if __name__ == "__main__":
