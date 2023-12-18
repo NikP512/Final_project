@@ -30,7 +30,6 @@ class Location:
         self.screen = screen
         self.id = str(ident)
         self.objects = []
-        self.object_classes = {"block": Block}
         self.images = {"block": pygame.image.load("pictures/block.png"),
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png")}
@@ -58,10 +57,6 @@ class Location:
                     if obj_id in ["wall", "trap"]:
                         x, y, w, h, vx, vy = line.split()[1:]
                         self.objects.append(Wall(self.screen, int(x), int(y), int(w), int(h), float(vx), float(vy)))
-
-                    if obj_id == "trap":
-                        x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Trap(self.screen, int(x), int(y), int(w), int(h), float(vx), float(vy)))
 
 
 if __name__ == "__main__":
