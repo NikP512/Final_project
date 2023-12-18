@@ -233,7 +233,7 @@ def main():
         screen.fill((255, 255, 255))
         events = pygame.event.get()
         keys = check_events(events)
-        location.update()
+        location.draw()
         editor.screen.blit(editor.current_object_surf,
                            (editor.current_object.x - editor.current_object.w//2,
                             editor.current_object.y - editor.current_object.h//2))
