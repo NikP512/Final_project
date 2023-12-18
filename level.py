@@ -20,6 +20,7 @@ class Level:
 
     def update(self):
         self.locations[self.player_location].update()
+        self.player.update()
 
     def check_events(self, events):
         for event in events:
@@ -35,22 +36,14 @@ class Location:
         self.images = {"block": pygame.image.load("pictures/block.png"),
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png")}
-        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap}
 
-    def draw(self):
+    def update(self):
         for obj in self.objects:
+            obj.move()
             image = self.images.get(obj.id, None)
             scale_image = pygame.transform.scale(image, (obj.w, obj.h))
             scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
             self.screen.blit(scale_image, scale_rect)
-
-    def move(self):
-        for obj in self.objects:
-            obj.move()
-
-    def update(self):
-        self.move()
-        self.draw()
 
     def set_object_from_file(self, file_name):
         if os.path.exists(file_name):
@@ -62,11 +55,15 @@ class Location:
 
                     if obj_id == "block":
                         x, y = line.split()[1:]
-                        self.objects.append(Block(self.screen, int(x), int(y)))
+                        self.objects.append(Block(int(x), int(y)))
 
-                    if obj_id in ["wall", "trap"]:
+                    if obj_id == "wall":
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(self.object_type_dictionary[obj_id](self.screen, round(float(x), 0), round(float(y), 0), int(w), int(h), float(vx), float(vy)))
+                        self.objects.append(Wall(int(x), int(y), w, h, vx, vy))
+
+                    if obj_id == "trap":
+                        x, y, w, h, vx, vy = line.split()[1:]
+                        self.objects.append(Trap(int(x), int(y), w, h, vx, vy))
 
 
 if __name__ == "__main__":
