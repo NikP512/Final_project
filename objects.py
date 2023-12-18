@@ -36,5 +36,10 @@ class Trap(Object):
         self.id = "trap"
 
 
+class Goal(Object):
+    def __init__(self, x, y, w, h):
+        super().__init__(x, y, w, h)
+
+
 if __name__ == "__main__":
     print("This module is not for direct call!")
