@@ -12,7 +12,7 @@ class Menu:
         self.buttons = []
 
     def update(self):
-        """Добавить отрисовку заднего фона и кнопок по аналогии с objects.py"""
+        """Добавить отрисовку заднего фона и кнопок по аналогии с классом Location"""
         pass
 
     def check_events(self, events):
@@ -25,7 +25,6 @@ class Menu:
 
 
 class Button(Object):
-    """Добавить констркутор. Атрибуты: координатцы центра кнопки x, y и размеры w, h."""
     def __init__(self, x, y, w, h):
         super().__init__(x, y, w, h)
 
