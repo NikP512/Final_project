@@ -43,14 +43,23 @@ class LocationEditor:
         self.end_x = 0
         self.end_y = 0
         self.time = pygame.time.get_ticks()
-        self.block_w = Block(self.screen, 0, 0).w
-        self.block_h = Block(self.screen, 0, 0).h
+        self.block_w = Block(0, 0).w
+        self.block_h = Block(0, 0).h
         self.file_name = "levels/" + input()
-        self.current_object = Wall(self.screen, 0,0,0,0, 0, 0)
+        self.current_object = Wall(0, 0, 0, 0, 0, 0)
         self.current_object_surf = pygame.Surface((0, 0))
 
     def get_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
+
+    def information(self):
+        f = pygame.font.Font(None, 20)
+        text = "Текущий файл " + str(self.file_name).split("/")[-1]
+        text = f.render(text, 1, (90, 40, 250))
+        self.screen.blit(text, (0, 20))
+        text = "vx:" + str(round(self.current_object.vx, 1)) + " " + "vy:" + str(round(self.current_object.vy, 1))
+        text = f.render(text, 1, (90, 40, 250))
+        self.screen.blit(text, (0, 40))
 
     def save(self, events):
         for event in events:
@@ -127,8 +136,7 @@ class LocationEditor:
             self.time = pygame.time.get_ticks()
         if self.stage == 2:
             self.stage = 1
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
-                                                                         (self.start_x + self.end_x)//2,
+            self.layer.objects.append(self.classes_dictionary[self.type]((self.start_x + self.end_x)//2,
                                                                          (self.start_y+self.end_y)//2,
                                                                          abs(self.start_x-self.end_x),
                                                                          abs(self.start_y-self.end_y),
@@ -164,9 +172,6 @@ class LocationEditor:
 
     def change_current_object(self):
         keys = pygame.key.get_pressed()
-        text = "vx:" + str(round(self.current_object.vx,1)) + " " + "vy:" + str(round(self.current_object.vy,1))
-        text = pygame.font.Font(None, 30).render(text,1, (90, 40, 250))
-        self.screen.blit(text, (0, 20))
         if keys[pygame.K_UP]:
             self.current_object.vy -= 0.1
         if keys[pygame.K_RIGHT]:
@@ -228,10 +233,11 @@ def main():
         screen.fill((255, 255, 255))
         events = pygame.event.get()
         keys = check_events(events)
-        location.draw()
+        location.update()
         editor.screen.blit(editor.current_object_surf,
                            (editor.current_object.x - editor.current_object.w//2,
                             editor.current_object.y - editor.current_object.h//2))
+        editor.information()
         editor.save(events)
         editor.load(events)
         editor.choose_type()
