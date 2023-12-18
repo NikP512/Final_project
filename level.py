@@ -1,3 +1,4 @@
+import pygame
 from objects import *
 import os.path
 
@@ -6,6 +7,7 @@ class Level:
     def __init__(self, screen, ident, player):
         self.screen = screen
         self.id = str(ident)
+        self.running = True
         self.locations = []
         self.player = player
 
