@@ -44,8 +44,8 @@ class Location:
             obj.screen.blit(scale_image, scale_rect)
 
     def set_object_from_file(self, file_name):
-        if os.path.exists(file_name):
-            with open(file_name) as input_file:
+        if os.path.exists("levels/"+file_name):
+            with open("levels/"+file_name) as input_file:
                 for line in input_file:
                     if len(line.strip()) == 0 or line[0] == '#':
                         continue  # пустые строки и строки-комментарии пропускаем

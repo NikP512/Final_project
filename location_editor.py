@@ -41,7 +41,7 @@ class LocationEditor:
         self.time = pygame.time.get_ticks()
         self.block_w = Block(self.screen, 0, 0).w
         self.block_h = Block(self.screen, 0, 0).h
-        self.file_name = input()
+        self.file_name = "levels/" + input()
         self.current_object = Wall(self.screen, 0,0,0,0, 0, 0)
         self.current_object_surf = pygame.Surface((0, 0))
 

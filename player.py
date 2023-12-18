@@ -11,8 +11,7 @@ class Player:
     с соответствующей стороны от игрока свободное место, True -- есть, False -- нет
     self.jump_time -- время последнего прыжка
     """
-    def __init__(self, screen, layer_id):
-        self.layer_id = layer_id
+    def __init__(self, screen, number):
         self.screen = screen
 
         self.x = 0

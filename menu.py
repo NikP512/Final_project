@@ -12,7 +12,6 @@ class Menu:
     def update(self):
         self.screen.fill((255, 255, 255))
 
-
     def check_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:

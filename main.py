@@ -13,6 +13,7 @@ def main():
     screen = pygame.display.set_mode((width, height))
     clock = pygame.time.Clock()
     menu = Menu(screen)
+
     while menu.running:
         menu.update()
         pygame.display.update()
@@ -20,8 +21,14 @@ def main():
 
         clock.tick(fps)
 
+    player = Player(screen, menu.choose_player)
+    level = Level(screen, menu.choose_level, player)
 
-pygame.quit()
+    while level.running:
+        pass
+
+    pygame.quit()
+
 
 if __name__ == "__main__":
     main()
