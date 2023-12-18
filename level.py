@@ -35,6 +35,7 @@ class Location:
         self.images = {"block": pygame.image.load("pictures/block.png"),
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png")}
+        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap}
 
     def draw(self):
         for obj in self.objects:
@@ -65,7 +66,7 @@ class Location:
 
                     if obj_id in ["wall", "trap"]:
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Wall(self.screen, round(float(x), 0), round(float(y), 0), int(w), int(h), float(vx), float(vy)))
+                        self.objects.append(self.object_type_dictionary[obj_id](self.screen, round(float(x), 0), round(float(y), 0), int(w), int(h), float(vx), float(vy)))
 
 
 if __name__ == "__main__":
