@@ -6,6 +6,7 @@ import random
 """Управление:
 В любом режиме
 d -- удалить обЪект в точке где находиться курсор
+shif + d -- удалить все
 c -- выбрать объект для редактирования
 для выбраного объекта стрелочками изменяется скорость в соответствующем направлении
 1 -- режим добавленния блоков
@@ -56,6 +57,11 @@ class LocationEditor:
             object_rect = pygame.Rect(object.x - object.w / 2, object.y - object.h / 2, object.w, object.h)
             if object_rect.collidepoint((self.x, self.y)) and keys[pygame.K_d]:
                 self.layer.objects.pop(self.layer.objects.index(object))
+
+    def delete_all(self):
+        keys = pygame.key.get_pressed()
+        if (pygame.KMOD_SHIFT & pygame.key.get_mods()) and keys[pygame.K_d]:
+            self.layer.objects = []
 
     def add_block(self):
         """функция добавления блоков
@@ -199,6 +205,7 @@ def main():
         editor.choose_type()
         editor.get_mouse_position()
         editor.delete()
+        editor.delete_all()
         editor.choose_object()
         editor.change_current_object()
         if editor.type == 30:
