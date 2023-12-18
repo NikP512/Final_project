@@ -52,6 +52,15 @@ class LocationEditor:
     def get_mouse_position(self):
         self.x, self.y = pygame.mouse.get_pos()
 
+    def information(self):
+        f = pygame.font.Font(None, 20)
+        text = "Текущий файл " + str(self.file_name).split("/")[-1]
+        text = f.render(text, 1, (90, 40, 250))
+        self.screen.blit(text, (0, 20))
+        text = "vx:" + str(round(self.current_object.vx, 1)) + " " + "vy:" + str(round(self.current_object.vy, 1))
+        text = f.render(text, 1, (90, 40, 250))
+        self.screen.blit(text, (0, 40))
+
     def save(self, events):
         for event in events:
             if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_w):
@@ -164,9 +173,6 @@ class LocationEditor:
 
     def change_current_object(self):
         keys = pygame.key.get_pressed()
-        text = "vx:" + str(round(self.current_object.vx,1)) + " " + "vy:" + str(round(self.current_object.vy,1))
-        text = pygame.font.Font(None, 30).render(text,1, (90, 40, 250))
-        self.screen.blit(text, (0, 20))
         if keys[pygame.K_UP]:
             self.current_object.vy -= 0.1
         if keys[pygame.K_RIGHT]:
@@ -232,6 +238,7 @@ def main():
         editor.screen.blit(editor.current_object_surf,
                            (editor.current_object.x - editor.current_object.w//2,
                             editor.current_object.y - editor.current_object.h//2))
+        editor.information()
         editor.save(events)
         editor.load(events)
         editor.choose_type()
