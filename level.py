@@ -15,17 +15,29 @@ class Level:
     def start_level(self):
         self.player_location = self.locations[0].id
 
-    def check_win(self):
-        pass
+    def update(self, keys):
+        self.player.move(keys)
+        self.player.jump(keys)
 
-    def update(self):
-        self.locations[self.player_location].update()
-        self.player.update()
+        for obj in self.locations[self.player_location].objects:
+            obj.move()
 
-    def check_events(self, events):
+            if obj.id == "trap" and check_contact(obj, self.player):
+                pass
+
+            if obj.id == "goal" and check_contact(obj, self.player):
+                pass
+
+    def draw(self):
+        self.locations[self.player_location].draw()
+        self.player.draw()
+
+    def check_events(self, events, keys):
         for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
+
+        self.update(keys)
 
 
 class Location:
@@ -38,13 +50,16 @@ class Location:
                        "trap": pygame.image.load("pictures/trap.png")}
         self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap}
 
-    def update(self):
+    def draw(self):
         for obj in self.objects:
-            obj.move()
             image = self.images.get(obj.id, None)
             scale_image = pygame.transform.scale(image, (obj.w, obj.h))
             scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
             self.screen.blit(scale_image, scale_rect)
+
+    def update(self):
+        for obj in self.objects:
+            obj.move()
 
     def set_object_from_file(self, file_name):
         if os.path.exists(file_name):
@@ -63,6 +78,16 @@ class Location:
                         self.objects.append(
                             self.object_type_dictionary[obj_id](round(float(x), 0), round(float(y), 0),
                                                                 int(w), int(h), float(vx), float(vy)))
+
+                    if obj_id == "goal":
+                        x, y = line.split()[1:]
+                        self.objects.append(Goal(int(x), int(y)))
+
+
+def check_contact(obj1, obj2):
+    rect1 = pygame.Rect(obj1.x - obj1.w//2, obj1.y - obj1.h//2, obj1.w, obj1.h)
+    rect2 = pygame.Rect(obj2.x - obj2.w // 2, obj2.y - obj2.h // 2, obj2.w, obj2.h)
+    return rect1.colliderect(rect2)
 
 
 if __name__ == "__main__":
