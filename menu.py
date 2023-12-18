@@ -12,8 +12,17 @@ class Menu:
         self.buttons = []
 
     def update(self):
-        """Добавить отрисовку заднего фона и кнопок по аналогии с классом Location"""
-        pass
+        """Отрисовка заднего фона и кнопок"""
+        image = self.background_image.get(self.background_image, None)
+        scale_image = pygame.transform.scale(image, (self.screen.get_width(), self.screen.get_height()))
+        scale_rect = scale_image.get_rect(center=(self.screen.get_width()/2, self.screen.get_height()/2))
+        self.screen.blit(scale_image, scale_rect)
+
+        for obj in self.buttons:
+            scale_image = pygame.transform.scale(self.button_image, (obj.w, obj.h))
+            scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
+            self.screen.blit(scale_image, scale_rect)
+
 
     def check_events(self, events):
         for event in events:
@@ -21,7 +30,12 @@ class Menu:
                 self.running = False
                 break
             # Добавить проверку, что мы ткнули на кнопку. Использовать pygame.collidepoint
-            pass
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = pygame.mouse.get_pos()
+                for button in self.buttons:
+                    button_rect = pygame.Rect(button.x - button.w / 2, button.y - button.h / 2, button.w, button.h)
+                    if button_rect.collidepoint((x, y)):
+                        pass
 
 
 class Button(Object):
