@@ -45,8 +45,8 @@ class Location:
             self.screen.blit(scale_image, scale_rect)
 
     def set_object_from_file(self, file_name):
-        if os.path.exists("levels/"+file_name):
-            with open("levels/"+file_name) as input_file:
+        if os.path.exists(file_name):
+            with open(file_name) as input_file:
                 for line in input_file:
                     if len(line.strip()) == 0 or line[0] == '#':
                         continue  # пустые строки и строки-комментарии пропускаем
@@ -58,7 +58,7 @@ class Location:
 
                     if obj_id in ["wall", "trap"]:
                         x, y, w, h, vx, vy = line.split()[1:]
-                        self.objects.append(Wall(self.screen, int(x), int(y), int(w), int(h), float(vx), float(vy)))
+                        self.objects.append(Wall(self.screen, round(float(x), 0), int(round(float(y), 0)), int(w), int(h), float(vx), float(vy)))
 
 
 if __name__ == "__main__":

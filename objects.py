@@ -1,5 +1,5 @@
 class Object:
-    def __init__(self, x, y, w, h, vx=0, vy=0):
+    def __init__(self, screen, x, y, w, h, vx=0, vy=0):
         self.x = x
         self.y = y
         self.w = w

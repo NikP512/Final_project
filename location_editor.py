@@ -133,11 +133,11 @@ class LocationEditor:
         text = pygame.font.Font(None, 30).render(text,1, (90, 40, 250))
         self.screen.blit(text, (0, 20))
         if keys[pygame.K_UP]:
-            self.current_object.vy += 0.1
+            self.current_object.vy -= 0.1
         if keys[pygame.K_RIGHT]:
             self.current_object.vx += 0.1
         if keys[pygame.K_DOWN]:
-            self.current_object.vy -= 0.1
+            self.current_object.vy += 0.1
         if keys[pygame.K_LEFT]:
             self.current_object.vx -= 0.1
 
@@ -185,7 +185,7 @@ def main():
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    location = Location(screen, 1)
+    location = Location(screen)
     editor = LocationEditor(screen, location)
     location.set_object_from_file(editor.file_name)
 
