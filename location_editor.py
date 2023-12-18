@@ -43,10 +43,10 @@ class LocationEditor:
         self.end_x = 0
         self.end_y = 0
         self.time = pygame.time.get_ticks()
-        self.block_w = Block(self.screen, 0, 0).w
-        self.block_h = Block(self.screen, 0, 0).h
+        self.block_w = Block(0, 0).w
+        self.block_h = Block(0, 0).h
         self.file_name = "levels/" + input()
-        self.current_object = Wall(self.screen, 0,0,0,0, 0, 0)
+        self.current_object = Wall(0, 0, 0, 0, 0, 0)
         self.current_object_surf = pygame.Surface((0, 0))
 
     def get_mouse_position(self):
@@ -136,8 +136,7 @@ class LocationEditor:
             self.time = pygame.time.get_ticks()
         if self.stage == 2:
             self.stage = 1
-            self.layer.objects.append(self.classes_dictionary[self.type](self.screen,
-                                                                         (self.start_x + self.end_x)//2,
+            self.layer.objects.append(self.classes_dictionary[self.type]((self.start_x + self.end_x)//2,
                                                                          (self.start_y+self.end_y)//2,
                                                                          abs(self.start_x-self.end_x),
                                                                          abs(self.start_y-self.end_y),
@@ -234,7 +233,7 @@ def main():
         screen.fill((255, 255, 255))
         events = pygame.event.get()
         keys = check_events(events)
-        location.draw()
+        location.update()
         editor.screen.blit(editor.current_object_surf,
                            (editor.current_object.x - editor.current_object.w//2,
                             editor.current_object.y - editor.current_object.h//2))
