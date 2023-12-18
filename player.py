@@ -11,20 +11,21 @@ class Player:
     с соответствующей стороны от игрока свободное место, True -- есть, False -- нет
     self.jump_time -- время последнего прыжка
     """
-    def __init__(self, screen, number):
+    def __init__(self, screen, layer_id):
+        self.layer_id = layer_id
         self.screen = screen
         self.x = 0
         self.y = 0
         self.vx = 0
         self.vy = 0
-        self.w = 40
-        self.h = 60
+        self.w = 70
+        self.h = 105
         self.place_up = False
         self.place_right = False
         self.place_down = False
         self.place_left = False
         self.jump_time = pygame.time.get_ticks() - 1000
-        self.image = pygame.image.load("pictures/player.jpg")
+        self.image = pygame.image.load("pictures/player_1.jpg")
 
     def get_coordinates(self, x, y):
         self.x = x
@@ -72,6 +73,7 @@ class Player:
 
         if abs(self.vx) < 0.02:
             self.vx = 0
+
 
     def jump(self, keys):
         """Метод прыжка
