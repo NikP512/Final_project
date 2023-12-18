@@ -36,13 +36,17 @@ class Location:
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png")}
 
-    def update(self):
+    def draw(self):
         for obj in self.objects:
-            obj.move()
             image = self.images.get(obj.id, None)
             scale_image = pygame.transform.scale(image, (obj.w, obj.h))
             scale_rect = scale_image.get_rect(center=(obj.x, obj.y))
             self.screen.blit(scale_image, scale_rect)
+
+    def update(self):
+        for obj in self.objects:
+            obj.move()
+        self.draw()
 
     def set_object_from_file(self, file_name):
         if os.path.exists(file_name):
