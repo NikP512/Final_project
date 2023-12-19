@@ -42,31 +42,24 @@ class Player:
         """Описывает движение игрока и остановку при столкновении
         ось для vy направлена вверх
         keys -- список зажатых клавиш"""
-        g = 0.05
-        if not self.place_down and (self.vy < 0):
-            self.vy = 0
+        g = 0.1
         if self.place_down:
             self.vy -= g
-            self.y -= self.vy
-
+        if not self.place_down and (self.vy < 0):
+            self.vy = 0
         if not self.place_up and (self.vy > 0):
             self.vy = 0
-        if self.place_up and (self.vy >= 0):
-            self.y -= self.vy
+        self.y -= self.vy
 
+        if keys[pygame.K_RIGHT] and (self.vx < 1):
+            self.vx += 0.1
+        if keys[pygame.K_LEFT] and (self.vx > -1):
+            self.vx -= 0.1
         if ((not self.place_right) or (self.x > self.screen.get_width() - self.w//2)) and (self.vx > 0):
             self.vx = 0
-        if self.place_right:
-            self.x += self.vx
-            if keys[pygame.K_RIGHT] and (self.vx < 1):
-                self.vx += 0.1
-
         if ((not self.place_left) or (self.x < self.w//2)) and (self.vx < 0):
             self.vx = 0
-        if self.place_left:
-            self.x += self.vx
-            if keys[pygame.K_LEFT] and (self.vx > -1):
-                self.vx -= 0.1
+        self.x += self.vx
 
         if (not self.place_down) and (self.vx < 0):
             self.vx += 0.01
@@ -83,7 +76,7 @@ class Player:
         """
         if (pygame.time.get_ticks() - self.jump_time) > 100 and not self.place_down and keys[pygame.K_SPACE]:
             self.jump_time = pygame.time.get_ticks()
-            self.vy = 3
+            self.vy += 4
         if not self.place_up and (self.vy > 0):
             self.jump_time -= 100
 
