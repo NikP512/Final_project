@@ -186,7 +186,7 @@ class LocationEditor:
         with (open(self.file_name, 'w') as out_file):
             for obj in self.layer.objects:
                 s = obj.id
-                if s == "block":
+                if s in ["block", "goal"]:
                     s += " " + str(obj.x) + " " + str(obj.y) + "\n"
                 elif s in ["wall", "trap"]:
                     s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + " " + str(obj.vx) + " " + str(obj.vy) + "\n"
