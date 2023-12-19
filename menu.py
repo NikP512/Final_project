@@ -36,9 +36,9 @@ class Menu:
             self.screen.blit(scale_image, scale_rect)
 
             if icon.id == self.choose_player:
-                pygame.draw.circle(self.screen, (255, 0, 0), (icon.x, icon.y), icon.w, 10)
+                pygame.draw.circle(self.screen, (255, 0, 0), (icon.x, icon.y), icon.w//2+10, 10)
             else:
-                pygame.draw.circle(self.screen, (0, 0, 0), (icon.x, icon.y), icon.w, 10)
+                pygame.draw.circle(self.screen, (0, 0, 0), (icon.x, icon.y), icon.w//2+10, 10)
 
     def check_events(self, events):
         for event in events:
@@ -51,7 +51,7 @@ class Menu:
                 x, y = pygame.mouse.get_pos()
 
                 for icon in self.icons:
-                    if (x - icon.x)**2 + (y - icon.y)**2 <= icon.w**2:
+                    if (x - icon.x)**2 + (y - icon.y)**2 <= icon.w**2//4:
                         self.choose_player = icon.id
 
                 for button in self.buttons:
