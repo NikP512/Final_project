@@ -54,14 +54,14 @@ class Player:
         if self.place_up and (self.vy >= 0):
             self.y -= self.vy
 
-        if (not self.place_right) and (self.vx > 0):
+        if ((not self.place_right) or (self.x > self.screen.get_width() - self.w//2)) and (self.vx > 0):
             self.vx = 0
         if self.place_right:
             self.x += self.vx
             if keys[pygame.K_RIGHT] and (self.vx < 1):
                 self.vx += 0.1
 
-        if (not self.place_left) and (self.vx < 0):
+        if ((not self.place_left) or (self.x < self.w//2)) and (self.vx < 0):
             self.vx = 0
         if self.place_left:
             self.x += self.vx
