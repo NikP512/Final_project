@@ -33,7 +33,7 @@ class LocationEditor:
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
-        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap}
+        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap, 33: Goal}
         self.type = 30
         self.x = 0
         self.y = 0
@@ -101,7 +101,7 @@ class LocationEditor:
         if keys[pygame.K_m]:
             self.layer.move()
 
-    def add_block(self):
+    def add_block_like_object(self):
         """функция добавления блоков
         """
         keys = pygame.key.get_pressed()
@@ -246,8 +246,8 @@ def main():
         editor.choose_object()
         editor.change_current_object()
         editor.motion_viewing(events)
-        if editor.type == 30:
-            editor.add_block()
+        if editor.type in [30, 33]:
+            editor.add_block_like_object()
         if editor.type in [31, 32]:
             editor.add_wall_like_object()
         clock.tick(FPS)
