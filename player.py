@@ -23,6 +23,7 @@ class Player:
         self.place_right = True
         self.place_down = True
         self.place_left = True
+        self.inner_place = True
         self.jump_time = pygame.time.get_ticks() - 1000
         self.image = pygame.image.load("pictures/player" + str(number) + ".png")
 
@@ -37,6 +38,12 @@ class Player:
         self.place_right = self.place_right and not rect.colliderect(rects[1])
         self.place_down = self.place_down and not rect.colliderect(rects[2])
         self.place_left = self.place_left and not rect.colliderect(rects[3])
+
+    def check_change_location_space(self, obj):
+        inner_rect = pygame.Rect(self.x - self.w//2+5, self.y - self.h//2+5, self.w - 10, self.h-10)
+        rect = pygame.Rect(obj.x - obj.w//2, obj.y - obj.h//2, obj.w, obj.h)
+
+        return not(self.inner_place and not rect.colliderect(inner_rect))
 
     def move(self, keys):
         """Описывает движение игрока и остановку при столкновении

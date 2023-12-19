@@ -34,6 +34,7 @@ class Level:
 
         if self.player.y > self.screen.get_height() + 200:
             self.start_level()
+
         self.player.jump(keys)
         self.player.move(keys)
         self.player.place_up = True
@@ -43,7 +44,7 @@ class Level:
 
     def change_location(self):
         for obj in self.locations[(self.player_location+1) % len(self.locations)].objects:
-            if check_contact(self.player, obj):
+            if self.player.check_change_location_space(obj):
                 return
 
         self.player_location = (self.player_location+1) % len(self.locations)
