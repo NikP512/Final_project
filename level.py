@@ -34,9 +34,9 @@ class Level:
         self.player.jump(keys)
         self.player.move(keys)
         self.player.place_up = True
-        self.player.place_up = True
-        self.player.place_up = True
-        self.player.place_up = True
+        self.player.place_right = True
+        self.player.place_down = True
+        self.player.place_left = True
 
     def draw(self):
         self.locations[self.player_location].draw()
