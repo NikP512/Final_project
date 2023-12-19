@@ -40,6 +40,7 @@ def main():
     while level.running:
         level.draw()
         pygame.display.update()
+        level.update(pygame.key.get_pressed())
         level.check_events(pygame.event.get(), pygame.key.get_pressed())
 
         clock.tick(fps)

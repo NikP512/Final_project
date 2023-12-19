@@ -23,13 +23,14 @@ class Level:
         for obj in self.locations[self.player_location].objects:
             obj.move()
 
-            if obj.id == "trap" and check_contact(obj, self.player):
-                self.start_level()
-
-            if obj.id == "goal" and check_contact(obj, self.player):
-                self.running = False
-
-            self.player.check_space(obj)
+            if obj.id == "trap":
+                if check_contact(obj, self.player):
+                    self.start_level()
+            elif obj.id == "goal":
+                if check_contact(obj, self.player):
+                    self.running = False
+            else:
+                self.player.check_space(obj)
 
         self.player.jump(keys)
         self.player.move(keys)
