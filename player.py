@@ -26,14 +26,14 @@ class Player:
         self.jump_time = pygame.time.get_ticks() - 1000
         self.image = pygame.image.load("pictures/" + str(number) + ".png")
 
-    def get_coordinates(self, x, y):
-        self.x = x
-        self.y = y
+    def check_space(self, obj):
+        rects = [pygame.Rect(self.x - self.w//2, self.y - self.h//2, self.w, self.h//2),
+                 pygame.Rect(self.x, self.y - self.h//2, self.w//2, self.h),
+                 pygame.Rect(self.x - self.w//2, self.y, self.w, self.h//2),
+                 pygame.Rect(self.x - self.w//2, self.y - self.h//2, self.w//2, self.h)]
+        rect = pygame.Rect(obj.x - obj.w//2, obj.y - obj.h//2, obj.w, obj.h)
 
-    def get_info_about_space(self, info):
-        """Метод для получения self.place_up и так далее
-        info -- список из четырех элемнтов с соответствующими данными"""
-        self.place_up, self.place_right, self.place_down, self.place_left = info
+        self.place_up, self.place_right, self.place_down, self.place_left = [rect.colliderect(rect) for rect in rects]
 
     def move(self, keys):
         """Описывает движение игрока и остановку при столкновении

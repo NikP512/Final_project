@@ -7,26 +7,32 @@ class Level:
     def __init__(self, screen, ident, player):
         self.screen = screen
         self.id = str(ident)
-        self.running = True
+        self.running = False
         self.locations = dict()
         self.player = player
         self.player_location = None
 
     def start_level(self):
-        self.player_location = self.locations[0].id
+        self.player_location = self.locations[self.id + ".1"].id
+        self.player.x = 0
+        self.player.y = 0
+        self.player.vx = 0
+        self.player.vy = 0
 
     def update(self, keys):
-        self.player.move(keys)
-        self.player.jump(keys)
-
         for obj in self.locations[self.player_location].objects:
             obj.move()
 
             if obj.id == "trap" and check_contact(obj, self.player):
-                pass
+                self.start_level()
 
             if obj.id == "goal" and check_contact(obj, self.player):
-                pass
+                self.running = False
+
+            self.player.check_space(obj)
+
+        self.player.jump(keys)
+        self.player.move(keys)
 
     def draw(self):
         self.locations[self.player_location].draw()
