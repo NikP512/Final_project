@@ -18,6 +18,8 @@ class Menu:
         """number -- число уровней"""
         self.icons.append(Icon(300, 250, 1))
         self.icons.append(Icon(500, 250, 2))
+        for n in range(1, number+1):
+            self.buttons.append(Button(400, 275+100*n, n))
 
     def update(self):
         """Отрисовка заднего фона и кнопок"""
@@ -36,9 +38,9 @@ class Menu:
             self.screen.blit(scale_image, scale_rect)
 
             if icon.id == self.choose_player:
-                pygame.draw.circle(self.screen, (255, 0, 0), (icon.x, icon.y), icon.w//2+10, 10)
+                pygame.draw.circle(self.screen, (255, 0, 0), (icon.x, icon.y), icon.w//2+5, 6)
             else:
-                pygame.draw.circle(self.screen, (0, 0, 0), (icon.x, icon.y), icon.w//2+10, 10)
+                pygame.draw.circle(self.screen, (0, 0, 0), (icon.x, icon.y), icon.w//2+5, 6)
 
     def check_events(self, events):
         for event in events:

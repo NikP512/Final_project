@@ -19,21 +19,24 @@ class Player:
         self.vy = 0
         self.w = 40
         self.h = 60
-        self.place_up = False
-        self.place_right = False
-        self.place_down = False
-        self.place_left = False
+        self.place_up = True
+        self.place_right = True
+        self.place_down = True
+        self.place_left = True
         self.jump_time = pygame.time.get_ticks() - 1000
-        self.image = pygame.image.load("pictures/" + str(number) + ".png")
+        self.image = pygame.image.load("pictures/player" + str(number) + ".png")
 
     def check_space(self, obj):
-        rects = [pygame.Rect(self.x - self.w//2, self.y - self.h//2, self.w, self.h//2),
-                 pygame.Rect(self.x, self.y - self.h//2, self.w//2, self.h),
-                 pygame.Rect(self.x - self.w//2, self.y, self.w, self.h//2),
-                 pygame.Rect(self.x - self.w//2, self.y - self.h//2, self.w//2, self.h)]
+        rects = [pygame.Rect(self.x - self.w//2+5, self.y - self.h//2, self.w-10, 1),
+                 pygame.Rect(self.x + self.w//2, self.y - self.h//2+5, 1, self.h-10),
+                 pygame.Rect(self.x - self.w//2+5, self.y + self.h//2, self.w-10, 1),
+                 pygame.Rect(self.x - self.w//2, self.y - self.h//2+5, 1, self.h-10)]
         rect = pygame.Rect(obj.x - obj.w//2, obj.y - obj.h//2, obj.w, obj.h)
 
-        self.place_up, self.place_right, self.place_down, self.place_left = [rect.colliderect(rect) for rect in rects]
+        self.place_up = self.place_up and not rect.colliderect(rects[0])
+        self.place_right = self.place_right and not rect.colliderect(rects[1])
+        self.place_down = self.place_down and not rect.colliderect(rects[2])
+        self.place_left = self.place_left and not rect.colliderect(rects[3])
 
     def move(self, keys):
         """Описывает движение игрока и остановку при столкновении

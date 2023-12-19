@@ -7,13 +7,13 @@ class Level:
     def __init__(self, screen, ident, player):
         self.screen = screen
         self.id = str(ident)
-        self.running = False
+        self.running = True
         self.locations = dict()
         self.player = player
         self.player_location = None
 
     def start_level(self):
-        self.player_location = self.locations[self.id + ".1"].id
+        self.player_location = self.id + ".1"
         self.player.x = 0
         self.player.y = 0
         self.player.vx = 0
@@ -33,6 +33,10 @@ class Level:
 
         self.player.jump(keys)
         self.player.move(keys)
+        self.player.place_up = True
+        self.player.place_up = True
+        self.player.place_up = True
+        self.player.place_up = True
 
     def draw(self):
         self.locations[self.player_location].draw()
@@ -55,9 +59,13 @@ class Location:
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png"),
                        "goal": pygame.image.load("pictures/goal.gif")}
-        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal" : Goal}
+        self.background_image = pygame.image.load("pictures/wall.png")
+        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal}
 
     def draw(self):
+        scale_image = pygame.transform.scale(self.background_image, (self.screen.get_width(), self.screen.get_height()))
+        scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
+        self.screen.blit(scale_image, scale_rect)
         for obj in self.objects:
             image = self.images.get(obj.id, None)
             scale_image = pygame.transform.scale(image, (obj.w, obj.h))
