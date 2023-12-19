@@ -8,14 +8,14 @@ class Level:
         self.screen = screen
         self.id = str(ident)
         self.running = True
-        self.locations = dict()
+        self.locations = []
         self.player = player
         self.player_location = None
 
     def start_level(self):
-        self.player_location = self.id + ".1"
-        self.player.x = 0
-        self.player.y = 0
+        self.player_location = 0
+        self.player.x = 20
+        self.player.y = 600
         self.player.vx = 0
         self.player.vy = 0
 
@@ -38,6 +38,13 @@ class Level:
         self.player.place_down = True
         self.player.place_left = True
 
+    def change_location(self):
+        for obj in self.locations[(self.player_location+1) % len(self.locations)].objects:
+            if check_contact(self.player, obj):
+                return
+
+        self.player_location = (self.player_location+1) % len(self.locations)
+
     def draw(self):
         self.locations[self.player_location].draw()
         self.player.draw()
@@ -46,6 +53,9 @@ class Level:
         for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
+
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                self.change_location()
 
         self.update(keys)
 

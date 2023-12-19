@@ -28,12 +28,12 @@ def main():
 
     player = Player(screen, menu.choose_player)
     level = Level(screen, menu.choose_level, player)
-    file_name = "levels/1."
+    file_name = "levels/" + level.id + "."
 
     n = 1
     while os.path.exists(file_name + str(n)):
-        level.locations["1." + str(n)] = Location(screen)
-        level.locations["1." + str(n)].set_object_from_file(file_name + str(n))
+        level.locations.append(Location(screen))
+        level.locations[-1].set_object_from_file(file_name + str(n))
         n += 1
     level.start_level()
 
