@@ -32,6 +32,8 @@ class Level:
             else:
                 self.player.check_space(obj)
 
+        if self.player.y > self.screen.get_height() + 200:
+            self.start_level()
         self.player.jump(keys)
         self.player.move(keys)
         self.player.place_up = True
@@ -55,7 +57,7 @@ class Level:
             if event.type == pygame.QUIT:
                 self.running = False
 
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_RETURN):
                 self.change_location()
 
         self.update(keys)

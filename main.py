@@ -14,7 +14,7 @@ def main():
     screen = pygame.display.set_mode((width, height))
     clock = pygame.time.Clock()
     menu = Menu(screen)
-    menu.start_menu(1)
+    menu.start_menu(2)
 
     while menu.running:
         menu.update()

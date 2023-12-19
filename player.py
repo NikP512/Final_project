@@ -76,7 +76,7 @@ class Player:
         """
         if (pygame.time.get_ticks() - self.jump_time) > 100 and not self.place_down and keys[pygame.K_SPACE]:
             self.jump_time = pygame.time.get_ticks()
-            self.vy += 4
+            self.vy += 5
         if not self.place_up and (self.vy > 0):
             self.jump_time -= 100
 
