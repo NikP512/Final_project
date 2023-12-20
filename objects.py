@@ -1,3 +1,6 @@
+import pygame.time
+
+
 class Object:
     def __init__(self, x, y, w, h, vx=0, vy=0):
         self.x = x
@@ -41,6 +44,18 @@ class Goal(Object):
         super().__init__(x, y, 30, 45)
         self.id = "goal"
 
+class Trampoline(Object):
+    """ Класс "Trampoline" описывает батуты
+    vx, vy -- скорость которая сообщается объекту при взаимодействии
+    """
+    def __init__(self, x, y, w, h, vx, vy):
+        super().__init__(x, y, w, h, vx, vy)
+        self.id = "trampoline"
+        self.time = pygame.time.get_ticks()
+
+    def boost(self, object):
+        object.vx += self.vx
+        object.vy += self.vy
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
