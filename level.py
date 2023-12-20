@@ -22,6 +22,8 @@ class Level:
     def update(self, keys):
         for obj in self.locations[self.player_location].objects:
             obj.move()
+            if obj.id == "shooting_trap":
+                obj.shot(self.locations[self.player_location])
 
             if obj.id == "trap":
                 if check_contact(obj, self.player):
@@ -76,9 +78,11 @@ class Location:
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png"),
                        "goal": pygame.image.load("pictures/goal.gif"),
-                       "trampoline": pygame.image.load("pictures/trampoline.png")}
+                       "trampoline": pygame.image.load("pictures/trampoline.png"),
+                       "shooting_trap": pygame.image.load("pictures/trap.png")}
         self.background_image = pygame.image.load("pictures/background.png")
-        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal, "trampoline": Trampoline}
+        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal,
+                                       "trampoline": Trampoline, "shooting_trap": ShootingTrap}
 
     def draw(self):
         scale_image = pygame.transform.scale(self.background_image, (self.screen.get_width(), self.screen.get_height()))
@@ -115,6 +119,12 @@ class Location:
                     if obj_id == "goal":
                         x, y = line.split()[1:]
                         self.objects.append(Goal(int(x), int(y)))
+
+                    if obj_id == "shooting_trap":
+                        x, y, w, h, vx, vy, cooldown = line.split()[1:]
+                        self.objects.append(
+                            self.object_type_dictionary[obj_id](round(float(x), 0), round(float(y), 0), int(w), int(h),
+                                                                float(vx), float(vy), round(float(cooldown), 0)))
 
 
 def check_contact(obj1, obj2):

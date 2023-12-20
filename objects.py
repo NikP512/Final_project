@@ -44,6 +44,7 @@ class Goal(Object):
         super().__init__(x, y, 30, 45)
         self.id = "goal"
 
+
 class Trampoline(Object):
     """ Класс "Trampoline" описывает батуты
     vx, vy -- скорость которая сообщается объекту при взаимодействии
@@ -61,6 +62,27 @@ class Trampoline(Object):
             object.vx += self.vx
             object.vy += self.vy
             self.time = pygame.time.get_ticks()
+
+
+class ShootingTrap(Object):
+    """ Класс "ShootingTrap" описывает стреляющие ловушки
+    vx, vy -- скорость снарядов запускаемых ловушкой
+    """
+    def __init__(self, x, y, w, h, vx, vy, shoot_cooldown=100):
+        super().__init__(x, y, w, h, vx, vy)
+        self.id = "shooting_trap"
+        self.time = pygame.time.get_ticks()
+        self.shot_cooldown = shoot_cooldown
+
+    def move(self):
+        pass
+
+    def shot(self, location):
+        if (pygame.time.get_ticks() - self.time) > self.shot_cooldown:
+            self.time = pygame.time.get_ticks()
+            location.objects.append(Trap(self.x, self.y, self.w//4, self.h//4, self.vx, self.vy))
+
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

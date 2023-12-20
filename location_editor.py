@@ -33,7 +33,7 @@ class LocationEditor:
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
-        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap, 33: Goal, 34: Trampoline}
+        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap, 33: Goal, 34: Trampoline, 35: ShootingTrap}
         self.type = 30
         self.x = 0
         self.y = 0
@@ -99,7 +99,7 @@ class LocationEditor:
                 self.layer.objects = []
                 self.layer.set_object_from_file(self.file_name)
         if keys[pygame.K_m]:
-            self.layer.move()
+            self.layer.update()
 
     def add_block_like_object(self):
         """функция добавления блоков
@@ -160,7 +160,7 @@ class LocationEditor:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_c]:
             for obj in self.layer.objects:
-                if obj.id in ["wall", "trap", "trampoline"]:
+                if obj.id in ["wall", "trap", "trampoline", "shooting_trap"]:
                     rect = pygame.Rect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h)
                     if rect.collidepoint(self.x, self.y):
                         self.current_object = obj
@@ -171,14 +171,20 @@ class LocationEditor:
 
     def change_current_object(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            self.current_object.vy -= 0.1
-        if keys[pygame.K_RIGHT]:
-            self.current_object.vx += 0.1
-        if keys[pygame.K_DOWN]:
-            self.current_object.vy += 0.1
-        if keys[pygame.K_LEFT]:
-            self.current_object.vx -= 0.1
+        if (self.current_object.id == "shooting_trap") and keys[pygame.K_t]:
+            if keys[pygame.K_RIGHT]:
+                self.current_object.shot_cooldown += 1
+            if keys[pygame.K_LEFT]:
+                self.current_object.shot_cooldown -= 1
+        else:
+            if keys[pygame.K_UP]:
+                self.current_object.vy -= 0.1
+            if keys[pygame.K_RIGHT]:
+                self.current_object.vx += 0.1
+            if keys[pygame.K_DOWN]:
+                self.current_object.vy += 0.1
+            if keys[pygame.K_LEFT]:
+                self.current_object.vx -= 0.1
 
     def write_objects_to_file(self):
         """
@@ -190,6 +196,9 @@ class LocationEditor:
                     s += " " + str(obj.x) + " " + str(obj.y) + "\n"
                 elif s in ["wall", "trap", "trampoline"]:
                     s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + " " + str(obj.vx) + " " + str(obj.vy) + "\n"
+                elif s in ["shooting_trap"]:
+                    s += (" " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h)
+                         + " " + str(obj.vx) + " " + str(obj.vy) + " " + str(obj.shot_cooldown) + "\n")
                 out_file.write(s)
 
     def choose_type(self):
@@ -248,7 +257,7 @@ def main():
         editor.motion_viewing(events)
         if editor.type in [30, 33]:
             editor.add_block_like_object()
-        if editor.type in [31, 32, 34]:
+        if editor.type in [31, 32, 34, 35]:
             editor.add_wall_like_object()
         clock.tick(FPS)
         pygame.display.update()
