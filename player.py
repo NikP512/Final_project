@@ -40,7 +40,7 @@ class Player:
         self.place_left = self.place_left and not rect.colliderect(rects[3])
 
     def check_change_location_space(self, obj):
-        inner_rect = pygame.Rect(self.x - self.w//2+5, self.y - self.h//2+5, self.w - 10, self.h-10)
+        inner_rect = pygame.Rect(self.x - self.w//2+2, self.y - self.h//2+2, self.w - 4, self.h-4)
         rect = pygame.Rect(obj.x - obj.w//2, obj.y - obj.h//2, obj.w, obj.h)
 
         return not(self.inner_place and not rect.colliderect(inner_rect))
