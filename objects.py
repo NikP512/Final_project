@@ -54,8 +54,10 @@ class Trampoline(Object):
         self.time = pygame.time.get_ticks()
 
     def boost(self, object):
-        object.vx += self.vx
-        object.vy += self.vy
+        if pygame.time.get_ticks() - self.time > 1000:
+            object.vx += self.vx
+            object.vy += self.vy
+            self.time = pygame.time.get_ticks()
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

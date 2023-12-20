@@ -72,9 +72,10 @@ class Location:
         self.images = {"block": pygame.image.load("pictures/block.png"),
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png"),
-                       "goal": pygame.image.load("pictures/goal.gif")}
+                       "goal": pygame.image.load("pictures/goal.gif"),
+                       "trampoline": pygame.image.load("pictures/trampoline.png")}
         self.background_image = pygame.image.load("pictures/background.png")
-        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal}
+        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal, "trampoline": Trampoline}
 
     def draw(self):
         scale_image = pygame.transform.scale(self.background_image, (self.screen.get_width(), self.screen.get_height()))
@@ -102,7 +103,7 @@ class Location:
                         x, y = line.split()[1:]
                         self.objects.append(Block(int(x), int(y)))
 
-                    if obj_id in ["wall", "trap"]:
+                    if obj_id in ["wall", "trap", "trampoline"]:
                         x, y, w, h, vx, vy = line.split()[1:]
                         self.objects.append(
                             self.object_type_dictionary[obj_id](round(float(x), 0), round(float(y), 0),

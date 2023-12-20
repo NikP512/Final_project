@@ -33,7 +33,7 @@ class LocationEditor:
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
-        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap, 33: Goal}
+        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap, 33: Goal, 34: Trampoline}
         self.type = 30
         self.x = 0
         self.y = 0
@@ -188,7 +188,7 @@ class LocationEditor:
                 s = obj.id
                 if s in ["block", "goal"]:
                     s += " " + str(obj.x) + " " + str(obj.y) + "\n"
-                elif s in ["wall", "trap"]:
+                elif s in ["wall", "trap", "trampoline"]:
                     s += " " + str(obj.x) + " " + str(obj.y) + " " + str(obj.w) + " " + str(obj.h) + " " + str(obj.vx) + " " + str(obj.vy) + "\n"
                 out_file.write(s)
 
@@ -248,7 +248,7 @@ def main():
         editor.motion_viewing(events)
         if editor.type in [30, 33]:
             editor.add_block_like_object()
-        if editor.type in [31, 32]:
+        if editor.type in [31, 32, 34]:
             editor.add_wall_like_object()
         clock.tick(FPS)
         pygame.display.update()
