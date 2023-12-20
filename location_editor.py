@@ -160,7 +160,7 @@ class LocationEditor:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_c]:
             for obj in self.layer.objects:
-                if obj.id in ["wall", "trap"]:
+                if obj.id in ["wall", "trap", "trampoline"]:
                     rect = pygame.Rect(obj.x - obj.w / 2, obj.y - obj.h / 2, obj.w, obj.h)
                     if rect.collidepoint(self.x, self.y):
                         self.current_object = obj

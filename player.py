@@ -51,12 +51,12 @@ class Player:
         keys -- список зажатых клавиш"""
         g = 0.1
         if self.place_down:
-            self.vy -= g
-        if not self.place_down and (self.vy < 0):
+            self.vy += g
+        if not self.place_down and (self.vy > 0):
             self.vy = 0
-        if not self.place_up and (self.vy > 0):
+        if not self.place_up and (self.vy < 0):
             self.vy = 0
-        self.y -= self.vy
+        self.y += self.vy
 
         if keys[pygame.K_RIGHT] and (self.vx < 1):
             self.vx += 0.1
@@ -83,7 +83,7 @@ class Player:
         """
         if (pygame.time.get_ticks() - self.jump_time) > 100 and not self.place_down and keys[pygame.K_SPACE]:
             self.jump_time = pygame.time.get_ticks()
-            self.vy += 5
+            self.vy -= 5
         if not self.place_up and (self.vy > 0):
             self.jump_time -= 100
 

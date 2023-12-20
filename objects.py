@@ -53,6 +53,9 @@ class Trampoline(Object):
         self.id = "trampoline"
         self.time = pygame.time.get_ticks()
 
+    def move(self):
+        pass
+
     def boost(self, object):
         if pygame.time.get_ticks() - self.time > 1000:
             object.vx += self.vx

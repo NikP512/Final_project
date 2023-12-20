@@ -29,6 +29,9 @@ class Level:
             elif obj.id == "goal":
                 if check_contact(obj, self.player):
                     self.running = False
+            elif obj.id == "trampoline":
+                if check_contact(obj, self.player):
+                    obj.boost(self.player)
             else:
                 self.player.check_space(obj)
 
