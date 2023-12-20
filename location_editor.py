@@ -72,6 +72,7 @@ class LocationEditor:
             text = "cooldown " + str(self.current_object.shot_cooldown)
             text = f.render(text, 1, (90, 40, 250))
             self.screen.blit(text, (0, 60))
+
     def save(self, events):
         for event in events:
             if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_w):

@@ -20,10 +20,9 @@ class Level:
         self.player.vy = 0
 
     def update(self, keys):
+        self.locations[self.player_location].update()
+
         for obj in self.locations[self.player_location].objects:
-            obj.move()
-            if obj.id == "shooting_trap":
-                obj.shot(self.locations[self.player_location])
 
             if obj.id == "trap":
                 if check_contact(obj, self.player):
@@ -97,6 +96,8 @@ class Location:
     def update(self):
         for obj in self.objects:
             obj.move()
+            if obj.id == "shooting_trap":
+                obj.shot(self)
 
     def set_object_from_file(self, file_name):
         if os.path.exists(file_name):
