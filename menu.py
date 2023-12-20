@@ -13,7 +13,7 @@ class Menu:
         self.choose_level = 0
         self.choose_player = 0
 
-        self.background_image = pygame.image.load("pictures/background.jpg")
+        self.background_image = pygame.image.load("pictures/background.png")
         self.button_image = pygame.image.load("pictures/button.png")
         self.font = pygame.font.Font("Font.otf", 30)
 
@@ -25,7 +25,7 @@ class Menu:
         self.icons.append(Icon(300, 250, 1))
         self.icons.append(Icon(500, 250, 2))
         for n in range(1, number+1):
-            self.buttons.append(Button(400, 275+100*n, n, self.font))
+            self.buttons.append(Button(400 + (-1)**n*125, 275+100*((n + 1)//2), n, self.font))
 
     def update(self):
         """Отрисовка заднего фона и кнопок"""
