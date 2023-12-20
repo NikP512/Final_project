@@ -18,7 +18,6 @@ l -- загрузить текущую версию из файла
 1 -- режим добавленния блоков
 4 -- режим добавления цели
 q -- добавить объект в точке где находится курсор
-2 -- режим добавления стен
 3 -- режим добавления ловушек
 5 -- режим добавления батутов
 6 -- режим добавления стреляющих ловушек
@@ -41,7 +40,7 @@ class LocationEditor:
     def __init__(self, screen, layer):
         self.screen = screen
         self.layer = layer
-        self.classes_dictionary = {30: Block, 31: Wall, 32: Trap, 33: Goal, 34: Trampoline, 35: ShootingTrap}
+        self.classes_dictionary = {30: Block, 32: Trap, 33: Goal, 34: Trampoline, 35: ShootingTrap}
         self.type = 30
         self.x = 0
         self.y = 0
@@ -54,7 +53,7 @@ class LocationEditor:
         self.block_w = Block(0, 0).w
         self.block_h = Block(0, 0).h
         self.file_name = "levels/" + input()
-        self.current_object = Wall(0, 0, 0, 0, 0, 0)
+        self.current_object = Trap(0, 0, 0, 0, 0, 0)
         self.current_object_surf = pygame.Surface((0, 0))
 
     def get_mouse_position(self):
@@ -152,21 +151,6 @@ class LocationEditor:
                                                                          abs(self.start_x-self.end_x),
                                                                          abs(self.start_y-self.end_y),
                                                                          0, 0))
-
-    # def add_wall_random(self):
-        # if self.stage <= 1:
-            # self.start_x = random.randint(0, 800)
-            # self.start_y = random.randint(0, 800)
-            # self.stage = 1
-        # if (self.stage == 1) and (pygame.time.get_ticks() - self.time > 200):
-            # self.end_x = random.randint(self.start_x + 10, self.start_x + 20)
-            # self.end_y = random.randint(self.start_y + 1, self.start_y + 5)
-            # self.stage += 1
-            # self.time = pygame.time.get_ticks()
-        # if self.stage == 2:
-            # self.stage = 1
-            # self.layer.objects.append(self.classes_dictionary[self.type](self.screen, (self.start_x + self.end_x)//2,
-            # (self.start_y+self.end_y)//2, abs(self.start_x-self.end_x), abs(self.start_y-self.end_y)))
 
     def choose_object(self):
         keys = pygame.key.get_pressed()
@@ -281,7 +265,7 @@ def main():
         editor.motion_viewing(events)
         if editor.type in [30, 33]:
             editor.add_block_like_object()
-        if editor.type in [31, 32, 34, 35]:
+        if editor.type in [32, 34, 35]:
             editor.add_wall_like_object()
         clock.tick(FPS)
         pygame.display.update()

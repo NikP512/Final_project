@@ -1,5 +1,6 @@
 import pygame
 from objects import *
+from menu import Button
 import os.path
 
 
@@ -7,10 +8,17 @@ class Level:
     def __init__(self, screen, ident, player):
         self.screen = screen
         self.id = str(ident)
+
         self.running = True
+        self.completed = False
+
         self.locations = []
+        self.background_image = pygame.image.load("pictures/background.png")
+
         self.player = player
         self.player_location = None
+
+        self.font1 = pygame.font.Font("fonts/pixel.otf", 50)
 
     def start_level(self):
         self.player_location = 0
@@ -20,43 +28,60 @@ class Level:
         self.player.vy = 0
 
     def update(self, keys):
-        for location in self.locations:
-            location.update()
+        if not self.completed:
+            for location in self.locations:
+                location.update()
 
-        for obj in self.locations[self.player_location].objects:
+            for obj in self.locations[self.player_location].objects:
 
-            if obj.id == "trap":
-                if check_contact(obj, self.player):
-                    self.start_level()
-            elif obj.id == "goal":
-                if check_contact(obj, self.player):
-                    self.running = False
-            elif obj.id == "trampoline":
-                if check_contact(obj, self.player):
-                    obj.boost(self.player)
-            else:
-                self.player.check_space(obj)
+                if obj.id == "trap":
+                    if check_contact(obj, self.player):
+                        self.start_level()
+                elif obj.id == "goal":
+                    if check_contact(obj, self.player):
+                        self.completed = True
+                elif obj.id == "trampoline":
+                    if check_contact(obj, self.player):
+                        obj.boost(self.player)
+                else:
+                    self.player.check_space(obj)
 
-        if self.player.y > self.screen.get_height() + 200:
-            self.start_level()
+            if self.player.y > self.screen.get_height() + 200:
+                self.start_level()
 
-        self.player.jump(keys)
-        self.player.move(keys)
-        self.player.place_up = True
-        self.player.place_right = True
-        self.player.place_down = True
-        self.player.place_left = True
+            self.player.jump(keys)
+            self.player.move(keys)
+            self.player.place_up = True
+            self.player.place_right = True
+            self.player.place_down = True
+            self.player.place_left = True
 
     def change_location(self):
-        for obj in self.locations[(self.player_location+1) % len(self.locations)].objects:
-            if self.player.check_change_location_space(obj):
-                return
+        if not self.completed:
+            for obj in self.locations[(self.player_location+1) % len(self.locations)].objects:
+                if self.player.check_change_location_space(obj):
+                    return
 
-        self.player_location = (self.player_location+1) % len(self.locations)
+            self.player_location = (self.player_location+1) % len(self.locations)
 
-    def draw(self):
-        self.locations[self.player_location].draw()
-        self.player.draw()
+    def draw(self, color):
+        if not self.completed:
+            scale_image = pygame.transform.scale(self.background_image,
+                                                 (self.screen.get_width(), self.screen.get_height()))
+            scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
+            self.screen.blit(scale_image, scale_rect)
+            self.locations[self.player_location].draw()
+            self.player.draw()
+        else:
+            scale_image = pygame.transform.scale(self.background_image,
+                                                 (self.screen.get_width(), self.screen.get_height()))
+            scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
+            self.screen.blit(scale_image, scale_rect)
+
+            text = self.font1.render("CONGRATULATIONS!", False, color)
+            self.screen.blit(text, text.get_rect(center=(400, 300)))
+
+
 
     def check_events(self, events, keys):
         for event in events:
@@ -75,19 +100,14 @@ class Location:
         self.screen = screen
         self.objects = []
         self.images = {"block": pygame.image.load("pictures/block.png"),
-                       "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png"),
-                       "goal": pygame.image.load("pictures/goal.gif"),
+                       "goal": pygame.image.load("pictures/goal.jpg"),
                        "trampoline": pygame.image.load("pictures/trampoline.png"),
                        "shooting_trap": pygame.image.load("pictures/trap.png")}
-        self.background_image = pygame.image.load("pictures/background.png")
-        self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal,
+        self.object_type_dictionary = {"block": Block, "trap": Trap, "goal": Goal,
                                        "trampoline": Trampoline, "shooting_trap": ShootingTrap}
 
     def draw(self):
-        scale_image = pygame.transform.scale(self.background_image, (self.screen.get_width(), self.screen.get_height()))
-        scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
-        self.screen.blit(scale_image, scale_rect)
         for obj in self.objects:
             image = self.images.get(obj.id, None)
             scale_image = pygame.transform.scale(image, (obj.w, obj.h))
@@ -113,7 +133,7 @@ class Location:
                         x, y = line.split()[1:]
                         self.objects.append(Block(int(x), int(y)))
 
-                    if obj_id in ["wall", "trap", "trampoline"]:
+                    if obj_id in ["trap", "trampoline"]:
                         x, y, w, h, vx, vy = line.split()[1:]
                         self.objects.append(
                             self.object_type_dictionary[obj_id](round(float(x), 0), round(float(y), 0),

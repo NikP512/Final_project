@@ -1,4 +1,5 @@
 import pygame
+import random
 from player import *
 from menu import *
 from level import *
@@ -39,7 +40,8 @@ def main():
         level.start_level()
 
         while level.running:
-            level.draw()
+            level.draw(random.choice([(0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255),
+                                      (255, 255, 0), (255, 0, 255), (0, 255, 255)]))
             pygame.display.update()
             level.update(pygame.key.get_pressed())
             level.check_events(pygame.event.get(), pygame.key.get_pressed())

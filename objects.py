@@ -20,6 +20,7 @@ class Object:
         if (self.x < -w) or (self.x > 2*w) or (self.y < - h) or (self.y > 2*h):
             location.objects.pop(location.objects.index(self))
 
+
 class Block(Object):
     """Класс "Block" описывает блоки."""
     def __init__(self, x, y):
@@ -28,13 +29,6 @@ class Block(Object):
 
     def move(self):
         pass
-
-
-class Wall(Object):
-    """Класс "Wall" описывает стены"""
-    def __init__(self, x, y, w, h, vx, vy):
-        super().__init__(x, y, w, h, vx, vy)
-        self.id = "wall"
 
 
 class Trap(Object):
@@ -46,7 +40,7 @@ class Trap(Object):
 
 class Goal(Object):
     def __init__(self, x, y):
-        super().__init__(x, y, 30, 45)
+        super().__init__(x, y, 40, 56)
         self.id = "goal"
 
 
@@ -86,7 +80,6 @@ class ShootingTrap(Object):
         if (pygame.time.get_ticks() - self.time) > self.shot_cooldown:
             self.time = pygame.time.get_ticks()
             location.objects.append(Trap(self.x, self.y, self.w//4, self.h//4, self.vx, self.vy))
-
 
 
 if __name__ == "__main__":
