@@ -10,7 +10,7 @@ class Menu:
         self.choose_level = 0
         self.choose_player = 0
         self.background_image = pygame.image.load("pictures/background.png")
-        self.button_image = pygame.image.load("pictures/block.png")
+        self.button_image = pygame.image.load("pictures/button.png")
         self.icons = []
         self.buttons = []
 
