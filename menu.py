@@ -13,7 +13,7 @@ class Menu:
         self.choose_level = 0
         self.choose_player = 0
 
-        self.background_image = pygame.image.load("pictures/background.png")
+        self.background_image = pygame.image.load("pictures/background.jpg")
         self.button_image = pygame.image.load("pictures/button.png")
         self.font = pygame.font.Font("Font.otf", 30)
 
