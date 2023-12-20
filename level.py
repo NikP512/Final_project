@@ -73,7 +73,7 @@ class Location:
                        "wall": pygame.image.load("pictures/wall.png"),
                        "trap": pygame.image.load("pictures/trap.png"),
                        "goal": pygame.image.load("pictures/goal.gif")}
-        self.background_image = pygame.image.load("pictures/wall.png")
+        self.background_image = pygame.image.load("pictures/background.png")
         self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal}
 
     def draw(self):
