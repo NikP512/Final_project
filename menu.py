@@ -1,16 +1,22 @@
-import pygame
 from objects import Object
+import pygame
+pygame.font.init()
 
 
 class Menu:
     def __init__(self, screen):
         self.screen = screen
+
         self.running = True
         self.finished = False
+
         self.choose_level = 0
         self.choose_player = 0
+
         self.background_image = pygame.image.load("pictures/background.png")
         self.button_image = pygame.image.load("pictures/button.png")
+        self.font = pygame.font.Font("Font.otf", 30)
+
         self.icons = []
         self.buttons = []
 
@@ -19,7 +25,7 @@ class Menu:
         self.icons.append(Icon(300, 250, 1))
         self.icons.append(Icon(500, 250, 2))
         for n in range(1, number+1):
-            self.buttons.append(Button(400, 275+100*n, n))
+            self.buttons.append(Button(400, 275+100*n, n, self.font))
 
     def update(self):
         """Отрисовка заднего фона и кнопок"""
@@ -31,6 +37,7 @@ class Menu:
             scale_image = pygame.transform.scale(self.button_image, (button.w, button.h))
             scale_rect = scale_image.get_rect(center=(button.x, button.y))
             self.screen.blit(scale_image, scale_rect)
+            self.screen.blit(button.text, button.text.get_rect(center=(button.x, button.y)))
 
         for icon in self.icons:
             scale_image = pygame.transform.scale(icon.image, (icon.w, icon.h))
@@ -66,11 +73,11 @@ class Menu:
 
 
 class Button(Object):
-    def __init__(self, x, y, ident):
+    def __init__(self, x, y, ident, font):
         """ident - номер уровня."""
         super().__init__(x, y, 150, 50)
         self.id = ident
-        self.text = "Level " + str(ident)
+        self.text = font.render("Level " + str(ident), False, (0, 0, 0))
 
     def move(self):
         pass
