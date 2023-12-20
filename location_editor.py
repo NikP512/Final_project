@@ -8,10 +8,13 @@ import random
 d -- удалить обЪект в точке где находиться курсор
 shif + d -- удалить все
 c -- выбрать объект для редактирования
+для выбраного объекта стрелочками изменяется скорость в соответствующем направлении
+при нажатом p стрелочками меняется позиция объекта
+при нажатом t для ShootingTrap меняется cooldown
+backspace -- обнулить скорость выбраного объекта
 m -- отображение движения
 w -- сохранить текущую версию в файл
 l -- загрузить текущую версию из файла
-для выбраного объекта стрелочками изменяется скорость в соответствующем направлении
 1 -- режим добавленния блоков
 q -- добавить блок в точке где находится курсор
 2 -- режим добавления стен
@@ -171,11 +174,23 @@ class LocationEditor:
 
     def change_current_object(self):
         keys = pygame.key.get_pressed()
+        if keys[pygame.K_BACKSPACE]:
+            self.current_object.vx = 0
+            self.current_object.vy = 0
         if (self.current_object.id == "shooting_trap") and keys[pygame.K_t]:
             if keys[pygame.K_RIGHT]:
                 self.current_object.shot_cooldown += 1
             if keys[pygame.K_LEFT]:
                 self.current_object.shot_cooldown -= 1
+        elif (pygame.time.get_ticks() - self.time > 500) and keys[pygame.K_p]:
+            if keys[pygame.K_UP]:
+                self.current_object.y -= 1
+            if keys[pygame.K_RIGHT]:
+                self.current_object.x += 1
+            if keys[pygame.K_DOWN]:
+                self.current_object.y += 1
+            if keys[pygame.K_LEFT]:
+                self.current_object.x -= 1
         else:
             if keys[pygame.K_UP]:
                 self.current_object.vy -= 0.1
