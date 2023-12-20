@@ -14,6 +14,11 @@ class Object:
         self.x += self.vx
         self.y += self.vy
 
+    def rubbish_delete(self, location):
+        w = location.screen.get_width()
+        h = location.screen.get_height()
+        if (self.x < -w) or (self.x > 2*w) or (self.y < - h) or (self.y > 2*h):
+            location.objects.pop(location.objects.index(self))
 
 class Block(Object):
     """Класс "Block" описывает блоки."""

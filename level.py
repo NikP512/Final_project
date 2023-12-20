@@ -20,7 +20,8 @@ class Level:
         self.player.vy = 0
 
     def update(self, keys):
-        self.locations[self.player_location].update()
+        for location in self.locations:
+            location.update()
 
         for obj in self.locations[self.player_location].objects:
 
@@ -96,6 +97,7 @@ class Location:
     def update(self):
         for obj in self.objects:
             obj.move()
+            obj.rubbish_delete(self)
             if obj.id == "shooting_trap":
                 obj.shot(self)
 
