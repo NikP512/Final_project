@@ -15,8 +15,7 @@ class Menu:
 
         self.background_image = pygame.image.load("pictures/background.png")
         self.button_image = pygame.image.load("pictures/button.png")
-        self.font = pygame.font.Font("Font.otf", 30)
-
+        self.font1 = pygame.font.Font("fonts/pixel.otf", 30)
         self.icons = []
         self.buttons = []
 
@@ -24,10 +23,13 @@ class Menu:
         """number -- число уровней"""
         self.running = True
         self.choose_level = 0
+
         self.icons.append(Icon(300, 250, 1))
         self.icons.append(Icon(500, 250, 2))
+
+        self.buttons.append(Button(400, 100, "title", self.font1, 350, 50, "6 ЭТАЖ ШЕСТЁРКИ"))
         for n in range(1, number+1):
-            self.buttons.append(Button(400 + (-1)**n*125, 275+100*((n + 1)//2), n, self.font))
+            self.buttons.append(Button(400 + (-1)**n*125, 275+100*((n + 1)//2), n, self.font1))
 
     def update(self):
         """Отрисовка заднего фона и кнопок"""
@@ -68,18 +70,20 @@ class Menu:
                 for button in self.buttons:
                     button_rect = pygame.Rect(button.x - button.w//2, button.y - button.h//2, button.w, button.h)
                     if button_rect.collidepoint((x, y)):
-                        if self.choose_player != 0:
+                        if button.id == "title":
+                            button.text = self.font1.render("ТЫ УВЕРЕН?!", False, (0, 0, 0))
+                        else:
                             self.choose_level = button.id
                             self.running = False
                             break
 
 
 class Button(Object):
-    def __init__(self, x, y, ident, font):
+    def __init__(self, x, y, ident, font, w=150, h=50, text=""):
         """ident - номер уровня."""
-        super().__init__(x, y, 150, 50)
+        super().__init__(x, y, w, h)
         self.id = ident
-        self.text = font.render("Level " + str(ident), False, (0, 0, 0))
+        self.text = font.render(text if text else "level " + str(ident), False, (0, 0, 0))
 
     def move(self):
         pass
