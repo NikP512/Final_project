@@ -247,8 +247,6 @@ def check_events(events):
     for event in events:
         if event.type == pygame.QUIT:
             RUNNING = False
-    keys = pygame.key.get_pressed()
-    return keys
 
 
 def main():
@@ -264,7 +262,7 @@ def main():
     while RUNNING:
         screen.fill((255, 255, 255))
         events = pygame.event.get()
-        keys = check_events(events)
+        check_events(events)
         location.draw()
         editor.screen.blit(editor.current_object_surf,
                            (editor.current_object.x - editor.current_object.w//2,
