@@ -17,8 +17,8 @@ class Player:
         self.y = 0
         self.vx = 0
         self.vy = 0
-        self.w = 40
-        self.h = 60
+        self.w = 20
+        self.h = 50
         self.place_up = True
         self.place_right = True
         self.place_down = True
