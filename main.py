@@ -14,38 +14,37 @@ def main():
     screen = pygame.display.set_mode((width, height))
     clock = pygame.time.Clock()
     menu = Menu(screen)
-    menu.start_menu(5)
 
-    while menu.running:
-        menu.update()
-        pygame.display.update()
-        menu.check_events(pygame.event.get())
+    while not menu.finished:
+        menu.start_menu(5)
+        while menu.running:
+            menu.update()
+            pygame.display.update()
+            menu.check_events(pygame.event.get())
 
-        clock.tick(fps)
+            clock.tick(fps)
 
-    if menu.finished:
-        return
+        if menu.finished:
+            return
 
-    player = Player(screen, menu.choose_player)
-    level = Level(screen, menu.choose_level, player)
-    file_name = "levels/" + level.id + "."
+        player = Player(screen, menu.choose_player)
+        level = Level(screen, menu.choose_level, player)
+        file_name = "levels/" + level.id + "."
 
-    n = 1
-    while os.path.exists(file_name + str(n)):
-        level.locations.append(Location(screen))
-        level.locations[-1].set_object_from_file(file_name + str(n))
-        n += 1
-    level.start_level()
+        n = 1
+        while os.path.exists(file_name + str(n)):
+            level.locations.append(Location(screen))
+            level.locations[-1].set_object_from_file(file_name + str(n))
+            n += 1
+        level.start_level()
 
-    while level.running:
-        level.draw()
-        pygame.display.update()
-        level.update(pygame.key.get_pressed())
-        level.check_events(pygame.event.get(), pygame.key.get_pressed())
+        while level.running:
+            level.draw()
+            pygame.display.update()
+            level.update(pygame.key.get_pressed())
+            level.check_events(pygame.event.get(), pygame.key.get_pressed())
 
-        clock.tick(fps)
-
-    main()
+            clock.tick(fps)
 
 
 pygame.quit()

@@ -7,13 +7,13 @@ class Menu:
     def __init__(self, screen):
         self.screen = screen
 
-        self.running = True
+        self.running = False
         self.finished = False
 
         self.choose_level = 0
-        self.choose_player = 0
+        self.choose_player = 1
 
-        self.background_image = pygame.image.load("pictures/background.jpg")
+        self.background_image = pygame.image.load("pictures/background.png")
         self.button_image = pygame.image.load("pictures/button.png")
         self.font = pygame.font.Font("Font.otf", 30)
 
@@ -22,6 +22,8 @@ class Menu:
 
     def start_menu(self, number):
         """number -- число уровней"""
+        self.running = True
+        self.choose_level = 0
         self.icons.append(Icon(300, 250, 1))
         self.icons.append(Icon(500, 250, 2))
         for n in range(1, number+1):

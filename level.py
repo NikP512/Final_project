@@ -80,7 +80,7 @@ class Location:
                        "goal": pygame.image.load("pictures/goal.gif"),
                        "trampoline": pygame.image.load("pictures/trampoline.png"),
                        "shooting_trap": pygame.image.load("pictures/trap.png")}
-        self.background_image = pygame.image.load("pictures/background.jpg")
+        self.background_image = pygame.image.load("pictures/background.png")
         self.object_type_dictionary = {"block": Block, "wall": Wall, "trap": Trap, "goal": Goal,
                                        "trampoline": Trampoline, "shooting_trap": ShootingTrap}
 
