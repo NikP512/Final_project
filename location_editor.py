@@ -16,10 +16,15 @@ m -- отображение движения
 w -- сохранить текущую версию в файл
 l -- загрузить текущую версию из файла
 1 -- режим добавленния блоков
-q -- добавить блок в точке где находится курсор
+4 -- режим добавления цели
+q -- добавить объект в точке где находится курсор
 2 -- режим добавления стен
-s -- выбор начала стены 
-e -- выбор конца стены и ее создание"""
+3 -- режим добавления ловушек
+5 -- режим добавления батутов
+6 -- режим добавления стреляющих ловушек
+s -- выбор начала объекта 
+e -- выбор конца объекта и его создание
+"""
 
 
 class LocationEditor:
@@ -60,10 +65,13 @@ class LocationEditor:
         text = "Текущий файл " + str(self.file_name).split("/")[-1]
         text = f.render(text, 1, (90, 40, 250))
         self.screen.blit(text, (0, 20))
-        text = "vx:" + str(round(self.current_object.vx, 1)) + " " + "vy:" + str(round(self.current_object.vy, 1))
+        text = "vx: " + str(round(self.current_object.vx, 1)) + " " + "vy: " + str(round(self.current_object.vy, 1))
         text = f.render(text, 1, (90, 40, 250))
         self.screen.blit(text, (0, 40))
-
+        if self.current_object.id == "shooting_trap":
+            text = "cooldown " + str(self.current_object.shot_cooldown)
+            text = f.render(text, 1, (90, 40, 250))
+            self.screen.blit(text, (0, 60))
     def save(self, events):
         for event in events:
             if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_w):
