@@ -80,13 +80,11 @@ class Level:
             self.screen.blit(scale_image, scale_rect)
             scale_image = pygame.transform.scale(self.goal_image,
                                                  (200, 280))
-            scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2 + 150))
+            scale_rect = scale_image.get_rect(center=(400, 650))
             self.screen.blit(scale_image, scale_rect)
 
             text = self.font1.render("CONGRATULATIONS!", False, color)
             self.screen.blit(text, text.get_rect(center=(400, 300)))
-
-
 
     def check_events(self, events, keys):
         for event in events:
