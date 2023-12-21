@@ -14,6 +14,7 @@ class Level:
 
         self.locations = []
         self.background_image = pygame.image.load("pictures/background.png")
+        self.goal_image = pygame.image.load("pictures/goal.jpg")
 
         self.player = player
         self.player_location = None
@@ -76,6 +77,10 @@ class Level:
             scale_image = pygame.transform.scale(self.background_image,
                                                  (self.screen.get_width(), self.screen.get_height()))
             scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
+            self.screen.blit(scale_image, scale_rect)
+            scale_image = pygame.transform.scale(self.goal_image,
+                                                 (200, 280))
+            scale_rect = scale_image.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2 + 150))
             self.screen.blit(scale_image, scale_rect)
 
             text = self.font1.render("CONGRATULATIONS!", False, color)
